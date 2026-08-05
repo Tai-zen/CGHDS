@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useAuth } from '../context/AuthContext'
 import { useTheme } from '../context/ThemeContext'
-import { supabase } from '../lib/supabase'
+import { supabase, uploadImage } from '../lib/supabase'
 import { LogOut, Plus, Trash2, Edit3, Save, X, BookOpen, Newspaper, BookMarked, GraduationCap, BarChart2, CheckCircle, AlertCircle, ArrowUpRight, Images, Users, Sun, Moon, Calendar, FileText } from 'lucide-react'
 
 const ADMIN_EMAIL = 'admin@cghds.run.edu.ng'
@@ -145,8 +145,25 @@ function PubForm({ initial, onSave, onCancel, loading }) {
 const emptyStaff = { name: '', role: '', category: 'current_executive', photo_url: '', tenure: '', achievements: '', sort_order: 0 }
 function StaffForm({ initial, onSave, onCancel, loading }) {
   const [form, setForm] = useState(initial || emptyStaff)
+  const [uploading, setUploading] = useState(false)
+  const [uploadError, setUploadError] = useState('')
   const set = (k, v) => setForm(f => ({ ...f, [k]: v }))
   const inp = { width: '100%', background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: 12, padding: '12px 16px', color: '#fff', fontSize: 14, fontFamily: 'Syne, sans-serif', outline: 'none', boxSizing: 'border-box' }
+
+  const handleFile = async (e) => {
+    const file = e.target.files[0]
+    if (!file) return
+    setUploading(true); setUploadError('')
+    try {
+      const url = await uploadImage(file, 'staff')
+      set('photo_url', url)
+    } catch (err) {
+      setUploadError(err.message || 'Upload failed')
+    } finally {
+      setUploading(false)
+      e.target.value = ''
+    }
+  }
 
   return (
     <div style={{ background: '#161616', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 20, padding: 32, marginBottom: 24 }}>
@@ -171,8 +188,13 @@ function StaffForm({ initial, onSave, onCancel, loading }) {
           <input value={form.tenure} onChange={e => set('tenure', e.target.value)} placeholder="2020–2023" style={inp} />
         </div>
         <div style={{ gridColumn: '1/-1' }}>
-          <label style={{ color: 'rgba(255,255,255,0.3)', fontSize: 11, fontFamily: 'Syne, sans-serif', textTransform: 'uppercase', letterSpacing: '0.1em', display: 'block', marginBottom: 6 }}>Photo URL</label>
-          <input value={form.photo_url} onChange={e => set('photo_url', e.target.value)} placeholder="https://...jpg" style={inp} />
+          <label style={{ color: 'rgba(255,255,255,0.3)', fontSize: 11, fontFamily: 'Syne, sans-serif', textTransform: 'uppercase', letterSpacing: '0.1em', display: 'block', marginBottom: 6 }}>Photo</label>
+          <input type="file" accept="image/*" onChange={handleFile} disabled={uploading} style={inp} />
+          {uploading && <p style={{ color: '#C9A84C', fontSize: 12, marginTop: 6, fontFamily: 'Syne, sans-serif' }}>Uploading…</p>}
+          {uploadError && <p style={{ color: '#f87171', fontSize: 12, marginTop: 6, fontFamily: 'Syne, sans-serif' }}>{uploadError}</p>}
+          {form.photo_url && (
+            <img src={form.photo_url} alt="Preview" style={{ marginTop: 10, height: 80, width: 80, objectFit: 'cover', borderRadius: 12, border: '1px solid rgba(255,255,255,0.1)' }} onError={e => e.target.style.display = 'none'} />
+          )}
         </div>
         <div style={{ gridColumn: '1/-1' }}>
           <label style={{ color: 'rgba(255,255,255,0.3)', fontSize: 11, fontFamily: 'Syne, sans-serif', textTransform: 'uppercase', letterSpacing: '0.1em', display: 'block', marginBottom: 6 }}>Achievements (shown on hover)</label>
@@ -199,16 +221,38 @@ function StaffForm({ initial, onSave, onCancel, loading }) {
 const emptyGallery = { image_url: '', caption: '', category: '' }
 function GalleryForm({ initial, onSave, onCancel, loading }) {
   const [form, setForm] = useState(initial || emptyGallery)
+  const [uploading, setUploading] = useState(false)
+  const [uploadError, setUploadError] = useState('')
   const set = (k, v) => setForm(f => ({ ...f, [k]: v }))
   const inp = { width: '100%', background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: 12, padding: '12px 16px', color: '#fff', fontSize: 14, fontFamily: 'Syne, sans-serif', outline: 'none', boxSizing: 'border-box' }
+
+  const handleFile = async (e) => {
+    const file = e.target.files[0]
+    if (!file) return
+    setUploading(true); setUploadError('')
+    try {
+      const url = await uploadImage(file, 'gallery')
+      set('image_url', url)
+    } catch (err) {
+      setUploadError(err.message || 'Upload failed')
+    } finally {
+      setUploading(false)
+      e.target.value = ''
+    }
+  }
 
   return (
     <div style={{ background: '#161616', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 20, padding: 32, marginBottom: 24 }}>
       <h3 style={{ color: '#fff', fontFamily: 'Syne, sans-serif', fontWeight: 700, fontSize: 18, marginBottom: 24 }}>{initial?.id ? 'Edit Image' : 'Add Image'}</h3>
       <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
         <div>
-          <label style={{ color: 'rgba(255,255,255,0.3)', fontSize: 11, fontFamily: 'Syne, sans-serif', textTransform: 'uppercase', letterSpacing: '0.1em', display: 'block', marginBottom: 6 }}>Image URL *</label>
-          <input value={form.image_url} onChange={e => set('image_url', e.target.value)} placeholder="https://...jpg" style={inp} />
+          <label style={{ color: 'rgba(255,255,255,0.3)', fontSize: 11, fontFamily: 'Syne, sans-serif', textTransform: 'uppercase', letterSpacing: '0.1em', display: 'block', marginBottom: 6 }}>Upload Image *</label>
+          <input type="file" accept="image/*" onChange={handleFile} disabled={uploading} style={inp} />
+          {uploading && <p style={{ color: '#C9A84C', fontSize: 12, marginTop: 6, fontFamily: 'Syne, sans-serif' }}>Uploading…</p>}
+          {uploadError && <p style={{ color: '#f87171', fontSize: 12, marginTop: 6, fontFamily: 'Syne, sans-serif' }}>{uploadError}</p>}
+          {form.image_url && (
+            <p style={{ color: 'rgba(255,255,255,0.3)', fontSize: 11, marginTop: 8, fontFamily: 'monospace', wordBreak: 'break-all' }}>{form.image_url}</p>
+          )}
         </div>
         {form.image_url && (
           <img src={form.image_url} alt="Preview" style={{ maxHeight: 200, objectFit: 'cover', borderRadius: 12, border: '1px solid rgba(255,255,255,0.1)' }} onError={e => e.target.style.display = 'none'} />
@@ -223,7 +267,7 @@ function GalleryForm({ initial, onSave, onCancel, loading }) {
         </div>
       </div>
       <div style={{ display: 'flex', gap: 12, marginTop: 24, paddingTop: 24, borderTop: '1px solid rgba(255,255,255,0.05)' }}>
-        <button onClick={() => onSave(form)} disabled={loading || !form.image_url} style={{ display: 'flex', alignItems: 'center', gap: 8, background: '#C9A84C', color: '#0D0D0D', border: 'none', borderRadius: 12, padding: '10px 24px', fontFamily: 'Syne, sans-serif', fontWeight: 700, fontSize: 13, cursor: 'pointer', opacity: loading || !form.image_url ? 0.5 : 1 }}>
+        <button onClick={() => onSave(form)} disabled={loading || uploading || !form.image_url} style={{ display: 'flex', alignItems: 'center', gap: 8, background: '#C9A84C', color: '#0D0D0D', border: 'none', borderRadius: 12, padding: '10px 24px', fontFamily: 'Syne, sans-serif', fontWeight: 700, fontSize: 13, cursor: 'pointer', opacity: loading || uploading || !form.image_url ? 0.5 : 1 }}>
           <Save size={13} />{loading ? 'Saving...' : 'Save'}
         </button>
         <button onClick={onCancel} style={{ display: 'flex', alignItems: 'center', gap: 8, background: 'rgba(255,255,255,0.05)', color: 'rgba(255,255,255,0.6)', border: 'none', borderRadius: 12, padding: '10px 24px', fontFamily: 'Syne, sans-serif', fontSize: 13, cursor: 'pointer' }}>
@@ -278,8 +322,25 @@ const tagOptions = ['CONFERENCE', 'WORKSHOP', 'LECTURE', 'COMMEMORATION', 'SEMIN
 const emptyEventCard = { tag: 'CONFERENCE', date: '', title: '', description: '', img: '', link: '', internal: false }
 function EventCardForm({ initial, onSave, onCancel, loading }) {
   const [form, setForm] = useState(initial || emptyEventCard)
+  const [uploading, setUploading] = useState(false)
+  const [uploadError, setUploadError] = useState('')
   const set = (k, v) => setForm(f => ({ ...f, [k]: v }))
   const inp = { width: '100%', background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: 12, padding: '12px 16px', color: '#fff', fontSize: 14, fontFamily: 'Syne, sans-serif', outline: 'none', boxSizing: 'border-box' }
+
+  const handleFile = async (e) => {
+    const file = e.target.files[0]
+    if (!file) return
+    setUploading(true); setUploadError('')
+    try {
+      const url = await uploadImage(file, 'events')
+      set('img', url)
+    } catch (err) {
+      setUploadError(err.message || 'Upload failed')
+    } finally {
+      setUploading(false)
+      e.target.value = ''
+    }
+  }
   return (
     <div style={{ background: '#161616', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 20, padding: 32, marginBottom: 24 }}>
       <h3 style={{ color: '#fff', fontFamily: 'Syne, sans-serif', fontWeight: 700, fontSize: 18, marginBottom: 24 }}>{initial?.id ? 'Edit Event' : 'Add Event'}</h3>
@@ -303,8 +364,10 @@ function EventCardForm({ initial, onSave, onCancel, loading }) {
           <textarea value={form.description} onChange={e => set('description', e.target.value)} rows={3} placeholder="Brief description of the event..." style={{ ...inp, resize: 'none' }} />
         </div>
         <div style={{ gridColumn: '1/-1' }}>
-          <label style={{ color: 'rgba(255,255,255,0.3)', fontSize: 11, fontFamily: 'Syne, sans-serif', textTransform: 'uppercase', letterSpacing: '0.1em', display: 'block', marginBottom: 6 }}>Image URL</label>
-          <input value={form.img} onChange={e => set('img', e.target.value)} placeholder="https://...jpg" style={inp} />
+          <label style={{ color: 'rgba(255,255,255,0.3)', fontSize: 11, fontFamily: 'Syne, sans-serif', textTransform: 'uppercase', letterSpacing: '0.1em', display: 'block', marginBottom: 6 }}>Image</label>
+          <input type="file" accept="image/*" onChange={handleFile} disabled={uploading} style={inp} />
+          {uploading && <p style={{ color: '#C9A84C', fontSize: 12, marginTop: 6, fontFamily: 'Syne, sans-serif' }}>Uploading…</p>}
+          {uploadError && <p style={{ color: '#f87171', fontSize: 12, marginTop: 6, fontFamily: 'Syne, sans-serif' }}>{uploadError}</p>}
         </div>
         {form.img && (
           <div style={{ gridColumn: '1/-1' }}>
