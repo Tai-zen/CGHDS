@@ -100,6 +100,20 @@ create trigger events_updated_at
   for each row execute function update_updated_at();
 
 -- =============================================
+-- Table & sequence privileges
+-- RLS policies only control WHICH rows a role can touch — the role also
+-- needs base grants on the table itself, or every query is rejected
+-- before RLS is even evaluated (error 42501: permission denied for table ...).
+-- =============================================
+grant usage on schema public to anon, authenticated;
+
+grant select on public.publications, public.staff, public.gallery, public.events, public.upcoming_events to anon;
+
+grant select, insert, update, delete on public.publications, public.staff, public.gallery, public.events, public.upcoming_events to authenticated;
+
+grant usage, select on all sequences in schema public to anon, authenticated;
+
+-- =============================================
 -- Row Level Security
 -- =============================================
 alter table public.publications enable row level security;
