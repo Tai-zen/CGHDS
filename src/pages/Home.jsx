@@ -179,7 +179,7 @@ export default function Home() {
         <C>
           <div className="two-col">
             {/* Left */}
-            <div style={{ position: 'sticky', top: 128 }}>
+            <div style={{ top: 128 }}>
               <p className="section-label" style={{ marginBottom: 24 }}>What We Do</p>
               <h2 className="font-display" style={{ fontWeight: 800, color: 'var(--text-primary)', lineHeight: 0.95, marginBottom: 24, fontSize: 'clamp(36px, 5vw, 64px)' }}>
                 Shaping the future of <span className="font-serif text-gold" style={{ fontStyle: 'italic' }}>gender</span> &amp; development.
