@@ -321,7 +321,7 @@ function UpcomingEventForm({ initial, onSave, onCancel, loading }) {
 const tagOptions = ['CONFERENCE', 'WORKSHOP', 'LECTURE', 'COMMEMORATION', 'SEMINAR', 'OTHER']
 const emptyEventCard = { tag: 'CONFERENCE', date: '', title: '', description: '', img: '', link: '', internal: false }
 function EventCardForm({ initial, onSave, onCancel, loading }) {
-  const [form, setForm] = useState(initial || emptyEventCard)
+  const [form, setForm] = useState(initial ? { ...initial, description: initial.desc ?? '' } : emptyEventCard)
   const [uploading, setUploading] = useState(false)
   const [uploadError, setUploadError] = useState('')
   const set = (k, v) => setForm(f => ({ ...f, [k]: v }))
@@ -471,7 +471,7 @@ export default function AdminPage() {
   // Site Events CRUD
   const saveSiteEvent = async (form) => {
     setSaving(true)
-    const payload = { tag: form.tag, date: form.date || null, title: form.title, description: form.description || null, img: form.img || null, link: form.link || null, internal: form.internal || false }
+    const payload = { tag: form.tag, date: form.date || null, title: form.title, desc: form.description || null, img: form.img || null, link: form.link || null, internal: form.internal || false }
     let error
     if (form.id) { const r = await supabase.from('events').update(payload).eq('id', form.id); error = r.error }
     else { const r = await supabase.from('events').insert([payload]); error = r.error }
@@ -687,7 +687,7 @@ export default function AdminPage() {
                     {ev.date && <span style={{ color: 'var(--text-muted)', fontSize: 12, fontFamily: 'Syne, sans-serif' }}>{ev.date}</span>}
                   </div>
                   <p style={{ color: 'var(--text-primary)', fontFamily: 'Syne, sans-serif', fontWeight: 700, fontSize: 14, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{ev.title}</p>
-                  {ev.description && <p style={{ color: 'var(--text-muted)', fontSize: 12, fontFamily: 'Syne, sans-serif', marginTop: 3, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{ev.description}</p>}
+                  {ev.desc && <p style={{ color: 'var(--text-muted)', fontSize: 12, fontFamily: 'Syne, sans-serif', marginTop: 3, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{ev.desc}</p>}
                 </div>
                 <div style={{ display: 'flex', gap: 4, padding: '16px 12px', flexShrink: 0 }}>
                   <button onClick={() => { setEditItem(ev); setShowForm(true); window.scrollTo({ top: 0, behavior: 'smooth' }) }} style={{ padding: 8, background: 'none', border: 'none', cursor: 'pointer', color: 'var(--text-faint)', borderRadius: 8 }} onMouseEnter={e => e.currentTarget.style.color = 'var(--gold)'} onMouseLeave={e => e.currentTarget.style.color = 'var(--text-faint)'}><Edit3 size={14} /></button>

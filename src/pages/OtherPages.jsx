@@ -364,7 +364,7 @@ export function EventsPage() {
 
   // Combine: DB events first (newest), then static events
   const allEvents = [
-    ...dbEvents.map(ev => ({ tag: ev.tag, date: ev.date, title: ev.title, img: ev.img, desc: ev.description, link: ev.link, internal: ev.internal })),
+    ...dbEvents.map(ev => ({ tag: ev.tag, date: ev.date, title: ev.title, img: ev.img, desc: ev.desc, link: ev.link, internal: ev.internal })),
     ...staticEvents,
   ]
 

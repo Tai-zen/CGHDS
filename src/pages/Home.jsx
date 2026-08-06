@@ -48,6 +48,25 @@ const events = [
   },
 ]
 
+// DB events store `date` as free text (e.g. "November 10–14, 2026"); this section
+// needs { day, month, year }. Parse what we can, fall back to em-dashes if it doesn't parse.
+function parseEventDate(raw) {
+  if (!raw) return { day: '—', month: '—', year: '—' }
+  const match = raw.match(/([A-Za-z]+)\s+(\d{1,2})[\D]*?(\d{4})/)
+  if (match) {
+    return { day: match[2], month: match[1].slice(0, 3).toUpperCase(), year: match[3] }
+  }
+  const parsed = new Date(raw)
+  if (!isNaN(parsed)) {
+    return {
+      day: String(parsed.getDate()),
+      month: parsed.toLocaleDateString('en-US', { month: 'short' }).toUpperCase(),
+      year: String(parsed.getFullYear()),
+    }
+  }
+  return { day: '—', month: '—', year: '—' }
+}
+
 const C = ({ children, style = {}, tag: Tag = 'div', ...props }) => (
   <Tag style={{ maxWidth: 1280, margin: '0 auto', padding: '0 24px', ...style }} {...props}>{children}</Tag>
 )
@@ -57,12 +76,22 @@ export default function Home() {
   const isDark = theme === 'dark'
   const [upcomingEvents, setUpcomingEvents] = useState([])
   const [eventsLoaded, setEventsLoaded] = useState(false)
+  const [dbEvents, setDbEvents] = useState([])
 
   useEffect(() => {
     supabase.from('upcoming_events').select('*').order('event_date', { ascending: true })
       .then(({ data }) => { setUpcomingEvents(data || []); setEventsLoaded(true) })
       .catch(() => setEventsLoaded(true))
+
+    supabase.from('events').select('*').order('created_at', { ascending: false }).limit(2)
+      .then(({ data }) => { if (data) setDbEvents(data) })
   }, [])
+
+  // Show newest DB events first, then pad with the static fallback events up to 2 total
+  const displayEvents = [
+    ...dbEvents.map(ev => ({ tag: ev.tag, date: parseEventDate(ev.date), title: ev.title, desc: ev.desc, link: ev.link, internal: ev.internal, img: ev.img })),
+    ...events,
+  ].slice(0, 2)
 
   return (
     <div style={{ minHeight: '100vh', background: 'var(--bg-base)', transition: 'background 0.35s ease' }}>
@@ -198,7 +227,7 @@ export default function Home() {
           </div>
 
           <div className="event-grid">
-            {events.map((ev, i) => {
+            {displayEvents.map((ev, i) => {
               const cardContent = (
                 <>
                   <div style={{ position: 'relative', height: 220, overflow: 'hidden' }}>
