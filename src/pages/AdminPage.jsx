@@ -88,11 +88,28 @@ function LoginScreen({ onLogin }) {
 }
 
 // ─── Publication Form ───
-const emptyPub = { title: '', type: 'journal', authors: '', abstract: '', publish_date: '', volume: '', file_url: '', external_url: '' }
+const emptyPub = { title: '', type: 'journal', authors: '', abstract: '', publish_date: '', volume: '', file_url: '', external_url: '', cover_image: '' }
 function PubForm({ initial, onSave, onCancel, loading }) {
   const [form, setForm] = useState(initial || emptyPub)
+  const [uploading, setUploading] = useState(false)
+  const [uploadError, setUploadError] = useState('')
   const set = (k, v) => setForm(f => ({ ...f, [k]: v }))
   const inp = { width: '100%', background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: 12, padding: '12px 16px', color: '#fff', fontSize: 14, fontFamily: 'Syne, sans-serif', outline: 'none', boxSizing: 'border-box' }
+
+  const handleFile = async (e) => {
+    const file = e.target.files[0]
+    if (!file) return
+    setUploading(true); setUploadError('')
+    try {
+      const url = await uploadImage(file, 'publications')
+      set('cover_image', url)
+    } catch (err) {
+      setUploadError(err.message || 'Upload failed')
+    } finally {
+      setUploading(false)
+      e.target.value = ''
+    }
+  }
 
   return (
     <div style={{ background: '#161616', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 20, padding: 32, marginBottom: 24 }}>
@@ -116,6 +133,19 @@ function PubForm({ initial, onSave, onCancel, loading }) {
           <label style={{ color: 'rgba(255,255,255,0.3)', fontSize: 11, fontFamily: 'Syne, sans-serif', textTransform: 'uppercase', letterSpacing: '0.1em', display: 'block', marginBottom: 6 }}>Publish Date</label>
           <input type="date" value={form.publish_date} onChange={e => set('publish_date', e.target.value)} style={inp} />
         </div>
+        <div>
+          <label style={{ color: 'rgba(255,255,255,0.3)', fontSize: 11, fontFamily: 'Syne, sans-serif', textTransform: 'uppercase', letterSpacing: '0.1em', display: 'block', marginBottom: 6 }}>Volume</label>
+          <input value={form.volume} onChange={e => set('volume', e.target.value)} placeholder="e.g. 1" style={inp} />
+        </div>
+        <div style={{ gridColumn: '1/-1' }}>
+          <label style={{ color: 'rgba(255,255,255,0.3)', fontSize: 11, fontFamily: 'Syne, sans-serif', textTransform: 'uppercase', letterSpacing: '0.1em', display: 'block', marginBottom: 6 }}>Cover Image</label>
+          <input type="file" accept="image/*" onChange={handleFile} disabled={uploading} style={inp} />
+          {uploading && <p style={{ color: '#C9A84C', fontSize: 12, marginTop: 6, fontFamily: 'Syne, sans-serif' }}>Uploading…</p>}
+          {uploadError && <p style={{ color: '#f87171', fontSize: 12, marginTop: 6, fontFamily: 'Syne, sans-serif' }}>{uploadError}</p>}
+          {form.cover_image && (
+            <img src={form.cover_image} alt="Cover preview" style={{ marginTop: 10, height: 100, width: 80, objectFit: 'cover', borderRadius: 8, border: '1px solid rgba(255,255,255,0.1)' }} onError={e => e.target.style.display = 'none'} />
+          )}
+        </div>
         <div style={{ gridColumn: '1/-1' }}>
           <label style={{ color: 'rgba(255,255,255,0.3)', fontSize: 11, fontFamily: 'Syne, sans-serif', textTransform: 'uppercase', letterSpacing: '0.1em', display: 'block', marginBottom: 6 }}>Abstract</label>
           <textarea value={form.abstract} onChange={e => set('abstract', e.target.value)} rows={3} placeholder="Brief description..." style={{ ...inp, resize: 'none' }} />
@@ -130,7 +160,7 @@ function PubForm({ initial, onSave, onCancel, loading }) {
         </div>
       </div>
       <div style={{ display: 'flex', gap: 12, marginTop: 24, paddingTop: 24, borderTop: '1px solid rgba(255,255,255,0.05)' }}>
-        <button onClick={() => onSave(form)} disabled={loading || !form.title} style={{ display: 'flex', alignItems: 'center', gap: 8, background: '#C9A84C', color: '#0D0D0D', border: 'none', borderRadius: 12, padding: '10px 24px', fontFamily: 'Syne, sans-serif', fontWeight: 700, fontSize: 13, cursor: 'pointer', opacity: loading || !form.title ? 0.5 : 1 }}>
+        <button onClick={() => onSave(form)} disabled={loading || uploading || !form.title} style={{ display: 'flex', alignItems: 'center', gap: 8, background: '#C9A84C', color: '#0D0D0D', border: 'none', borderRadius: 12, padding: '10px 24px', fontFamily: 'Syne, sans-serif', fontWeight: 700, fontSize: 13, cursor: 'pointer', opacity: loading || uploading || !form.title ? 0.5 : 1 }}>
           <Save size={13} />{loading ? 'Saving...' : 'Save'}
         </button>
         <button onClick={onCancel} style={{ display: 'flex', alignItems: 'center', gap: 8, background: 'rgba(255,255,255,0.05)', color: 'rgba(255,255,255,0.6)', border: 'none', borderRadius: 12, padding: '10px 24px', fontFamily: 'Syne, sans-serif', fontSize: 13, cursor: 'pointer' }}>

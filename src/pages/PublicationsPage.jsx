@@ -29,7 +29,13 @@ const typeStyle = {
 function PublicationCard({ pub }) {
   const ts = typeStyle[pub.type] || typeStyle.publication
   return (
-    <div className="card-dark hover-lift" style={{ padding: 28, display: 'flex', flexDirection: 'column', height: '100%' }}>
+    <div className="card-dark hover-lift" style={{ display: 'flex', flexDirection: 'column', height: '100%', overflow: 'hidden' }}>
+      {pub.cover_image && (
+        <div style={{ height: 160, overflow: 'hidden' }}>
+          <img src={pub.cover_image} alt={pub.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} onError={e => e.target.parentElement.style.display = 'none'} />
+        </div>
+      )}
+      <div style={{ padding: 28, display: 'flex', flexDirection: 'column', flex: 1 }}>
       <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 12, marginBottom: 16 }}>
         <span className="font-display" style={{ fontSize: 10, fontWeight: 700, padding: '6px 12px', borderRadius: 999, textTransform: 'capitalize', letterSpacing: '0.1em', border: `1px solid ${ts.border}`, background: ts.bg, color: ts.color }}>
           {pub.type}
@@ -72,6 +78,7 @@ function PublicationCard({ pub }) {
         {!pub.file_url && !pub.external_url && (
           <span className="font-display" style={{ color: 'var(--text-faint)', fontSize: 12 }}>No download available</span>
         )}
+      </div>
       </div>
     </div>
   )
