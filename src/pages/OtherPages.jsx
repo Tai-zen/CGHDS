@@ -411,6 +411,20 @@ export function EventsPage() {
 }
 
 export function ContactPage() {
+  const [form, setForm] = useState({ name: '', email: '', subject: '', message: '' })
+  const [sent, setSent] = useState(false)
+  const set = (k, v) => setForm(f => ({ ...f, [k]: v }))
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    if (!form.name || !form.email || !form.message) return
+
+    const body = `Name: ${form.name}\nEmail: ${form.email}\n\n${form.message}`
+    const mailtoUrl = `mailto:taye.ojo08@gmail.com?subject=${encodeURIComponent(form.subject || `Message from ${form.name} via CGHDS site`)}&body=${encodeURIComponent(body)}`
+    window.location.href = mailtoUrl
+    setSent(true)
+  }
+
   return (
     <div style={{ minHeight: '100vh', background: 'var(--bg-base)' }}>
       <PageHeader label="Get in Touch" title="Contact Us" />
@@ -450,27 +464,32 @@ export function ContactPage() {
             {/* Form */}
             <div className="card-dark" style={{ padding: 32 }}>
               <h3 className="font-display" style={{ fontWeight: 700, color: 'var(--text-primary)', fontSize: 24, marginBottom: 28 }}>Send a Message</h3>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
+              <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
                 {[
-                  { label: 'Full Name', type: 'text', placeholder: 'Your full name' },
-                  { label: 'Email Address', type: 'email', placeholder: 'your@email.com' },
-                  { label: 'Subject', type: 'text', placeholder: 'Message subject' },
+                  { key: 'name', label: 'Full Name', type: 'text', placeholder: 'Your full name', required: true },
+                  { key: 'email', label: 'Email Address', type: 'email', placeholder: 'your@email.com', required: true },
+                  { key: 'subject', label: 'Subject', type: 'text', placeholder: 'Message subject', required: false },
                 ].map((f, i) => (
                   <div key={i}>
                     <label className="section-label" style={{ display: 'block', marginBottom: 8, fontSize: 10 }}>{f.label}</label>
-                    <input type={f.type} placeholder={f.placeholder}
+                    <input type={f.type} placeholder={f.placeholder} required={f.required} value={form[f.key]} onChange={e => set(f.key, e.target.value)}
                       style={{ width: '100%', background: 'var(--bg-surface)', border: '1px solid var(--border-nav)', borderRadius: 12, padding: '12px 16px', color: 'var(--text-primary)', fontSize: 14, outline: 'none', fontFamily: 'Syne, sans-serif', boxSizing: 'border-box' }} />
                   </div>
                 ))}
                 <div>
                   <label className="section-label" style={{ display: 'block', marginBottom: 8, fontSize: 10 }}>Message</label>
-                  <textarea rows={5} placeholder="Your message..."
+                  <textarea rows={5} placeholder="Your message..." required value={form.message} onChange={e => set('message', e.target.value)}
                     style={{ width: '100%', background: 'var(--bg-surface)', border: '1px solid var(--border-nav)', borderRadius: 12, padding: '12px 16px', color: 'var(--text-primary)', fontSize: 14, outline: 'none', resize: 'none', fontFamily: 'Syne, sans-serif', boxSizing: 'border-box' }} />
                 </div>
-                <button className="btn-filled" style={{ width: '100%', justifyContent: 'center', padding: '14px 28px' }}>
+                {sent && (
+                  <p style={{ color: 'var(--gold)', fontSize: 13, fontFamily: 'Syne, sans-serif' }}>
+                    Your email client should now be open with your message ready to send. If nothing opened, please email cghds@run.edu.ng directly.
+                  </p>
+                )}
+                <button type="submit" className="btn-filled" style={{ width: '100%', justifyContent: 'center', padding: '14px 28px' }}>
                   Send Message <ArrowRight size={15} />
                 </button>
-              </div>
+              </form>
             </div>
           </div>
         </C>

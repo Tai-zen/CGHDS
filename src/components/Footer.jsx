@@ -81,9 +81,14 @@ export default function Footer() {
         </div>
 
         {/* Bottom bar */}
-        <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: 16, color: 'var(--text-faint)', fontSize: 12, fontFamily: 'Syne, sans-serif', paddingTop: 24, borderTop: '1px solid var(--border-subtle)', marginTop: 48 }}>
-          <p>© {new Date().getFullYear()} CGHDS, Redeemer's University. All rights reserved.</p>
-          <Link to="/admin" style={{ color: 'var(--text-faint)', textDecoration: 'none' }}>Admin Portal</Link>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 12, color: 'var(--text-faint)', fontSize: 12, fontFamily: 'Syne, sans-serif', paddingTop: 24, borderTop: '1px solid var(--border-subtle)', marginTop: 48 }}>
+          <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: 16 }}>
+            <p>© {new Date().getFullYear()} CGHDS, Redeemer's University. All rights reserved.</p>
+            <Link to="/admin" style={{ color: 'var(--text-faint)', textDecoration: 'none' }}>Admin Portal</Link>
+          </div>
+          <p style={{ fontSize: 11, opacity: 0.8 }}>
+            Developed by Taiwo Inioluwa Ojo, Oreoluwa Daniel Olopade, Tomisin Fagbohunlu and Eyinjuoluwa Daramola as the developers of the web app.
+          </p>
         </div>
       </div>
 
