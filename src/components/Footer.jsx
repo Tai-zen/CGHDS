@@ -26,6 +26,7 @@ export default function Footer() {
                 Get In Touch <ArrowRight size={15} />
               </Link>
             </div>
+          </div>
         </div>
 
         {/* Links grid */}
