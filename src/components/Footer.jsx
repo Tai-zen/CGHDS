@@ -21,12 +21,10 @@ export default function Footer() {
                 Get updates on new research, events, and developments from CGHDS, Redeemer's University.
               </p>
             </div>
-            <div>
-              <div className="animate-fade-up delay-3" style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'center', gap: 16 }}>
-                <Link to="/contact" className="btn-filled" style={{ textDecoration: 'none' }}>
-                  Get In Touch <ArrowRight size={15} />
-                </Link>
-              </div>
+            <div className="animate-fade-up delay-3" style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'center', gap: 16 }}>
+              <Link to="/contact" className="btn-filled" style={{ textDecoration: 'none' }}>
+                Get In Touch <ArrowRight size={15} />
+              </Link>
             </div>
         </div>
 
