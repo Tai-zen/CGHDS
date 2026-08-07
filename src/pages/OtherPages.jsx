@@ -420,7 +420,7 @@ export function ContactPage() {
     if (!form.name || !form.email || !form.message) return
 
     const body = `Name: ${form.name}\nEmail: ${form.email}\n\n${form.message}`
-    const mailtoUrl = `mailto:taye.ojo08@gmail.com?subject=${encodeURIComponent(form.subject || `Message from ${form.name} via CGHDS site`)}&body=${encodeURIComponent(body)}`
+    const mailtoUrl = `mailto:oreoluwaolopade@gmail.com?subject=${encodeURIComponent(form.subject || `Message from ${form.name} via CGHDS site`)}&body=${encodeURIComponent(body)}`
     window.location.href = mailtoUrl
     setSent(true)
   }
