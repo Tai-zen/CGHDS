@@ -22,15 +22,12 @@ export default function Footer() {
               </p>
             </div>
             <div>
-              <div style={{ display: 'flex', alignItems: 'center', borderBottom: '1px solid var(--border-nav)', paddingBottom: 12 }}>
-                <input type="email" placeholder="your@email.com"
-                  style={{ flex: 1, background: 'transparent', color: 'var(--text-primary)', border: 'none', outline: 'none', fontSize: 14, fontFamily: 'Syne, sans-serif' }} />
-                <button style={{ color: 'var(--text-muted)', background: 'none', border: 'none', cursor: 'pointer', padding: 4, display: 'flex' }}>
-                  <ArrowRight size={18} />
-                </button>
+              <div className="animate-fade-up delay-3" style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'center', gap: 16 }}>
+                <Link to="/contact" className="btn-filled" style={{ textDecoration: 'none' }}>
+                  Get In Touch <ArrowRight size={15} />
+                </Link>
               </div>
             </div>
-          </div>
         </div>
 
         {/* Links grid */}
