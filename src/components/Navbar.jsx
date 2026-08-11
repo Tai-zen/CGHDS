@@ -1,10 +1,11 @@
 import { useState, useRef, useEffect } from 'react'
 import { Link, useLocation } from 'react-router-dom'
-import { ChevronDown, BookOpen, Newspaper, BookMarked, GraduationCap, Menu, X, Users, Award, Star, Clock, Images, Sun, Moon } from 'lucide-react'
+import { ChevronDown, BookOpen, Newspaper, BookMarked, GraduationCap, Feather, Menu, X, Users, Award, Star, Clock, Images, Sun, Moon } from 'lucide-react'
 import { useTheme } from '../context/ThemeContext'
 
 const researchLinks = [
   { label: 'Journal', path: '/publications/journal', icon: BookOpen, desc: 'Peer-reviewed academic journals' },
+  { label: 'Literature', path: '/publications/literature', icon: Feather, desc: 'Literary criticism & analysis' },
   { label: 'Newsletter', path: '/publications/newsletter', icon: Newspaper, desc: 'Latest news & updates' },
   { label: 'Monograph', path: '/publications/monograph', icon: BookMarked, desc: 'In-depth scholarly volumes' },
   { label: 'Publications', path: '/publications/all', icon: GraduationCap, desc: 'All outputs' },
@@ -143,7 +144,7 @@ export default function Navbar() {
           </div>
         </div>
 
-        {/* Right — Theme Toggle + Old Site */}
+        {/* Right — Theme Toggle */}
         <div style={{ flexShrink: 0, display: 'flex', alignItems: 'center', gap: 8 }} className="desktop-nav">
           <button
             onClick={toggle}
@@ -162,18 +163,28 @@ export default function Navbar() {
           >
             {isDark ? <Sun size={15} /> : <Moon size={15} />}
           </button>
-          <a href="http://cghds.run.edu.ng" target="_blank" rel="noreferrer"
-            style={{ display: 'flex', alignItems: 'center', gap: 8, background: 'var(--toggle-bg)', border: '1px solid var(--toggle-border)', color: 'var(--text-primary)', fontSize: 14, fontFamily: 'Syne, sans-serif', fontWeight: 500, padding: '8px 16px', borderRadius: 999, textDecoration: 'none', transition: 'background 0.2s' }}
-            onMouseEnter={e => e.currentTarget.style.background = 'var(--toggle-hover-bg)'}
-            onMouseLeave={e => e.currentTarget.style.background = 'var(--toggle-bg)'}>
-            Old Site ↗
-          </a>
         </div>
 
-        {/* Mobile toggle */}
-        <button onClick={() => setMobileOpen(!mobileOpen)} className="mobile-nav-toggle" style={{ color: 'var(--text-primary)', background: 'none', border: 'none', cursor: 'pointer', padding: 8 }}>
-          {mobileOpen ? <X size={20} /> : <Menu size={20} />}
-        </button>
+        {/* Mobile: theme toggle + menu button */}
+        <div className="mobile-nav-toggle" style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
+          <button
+            onClick={toggle}
+            aria-label="Toggle theme"
+            style={{
+              width: 36, height: 36, borderRadius: '50%',
+              border: '1px solid var(--border-gold-dim)',
+              background: 'var(--toggle-bg)',
+              color: 'var(--gold)',
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+              cursor: 'pointer', flexShrink: 0,
+            }}
+          >
+            {isDark ? <Sun size={14} /> : <Moon size={14} />}
+          </button>
+          <button onClick={() => setMobileOpen(!mobileOpen)} style={{ color: 'var(--text-primary)', background: 'none', border: 'none', cursor: 'pointer', padding: 8 }}>
+            {mobileOpen ? <X size={20} /> : <Menu size={20} />}
+          </button>
+        </div>
       </div>
 
       {/* Mobile menu */}

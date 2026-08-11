@@ -13,6 +13,7 @@ import { ConferencePage } from './pages/ConferencePage'
 import { PreConferencePage } from './pages/PreConferencePage'
 import { CurrentStaffPage, CurrentExecutivesPage, PastStaffPage, PastExecutivesPage } from './pages/StaffPages'
 import { GenderDevelopmentPage, HumanitarianDevelopmentPage, ShortCoursesPage } from './pages/ProgrammeDetailPages'
+import { OkaforIkwubizoLiteraturePage } from './pages/LiteraturePage'
 
 function ScrollToTop() {
   const { pathname } = useLocation()
@@ -45,6 +46,7 @@ function Layout() {
           <Route path="/staff/current" element={<CurrentStaffPage />} />
           <Route path="/staff/past-executives" element={<PastExecutivesPage />} />
           <Route path="/staff/past" element={<PastStaffPage />} />
+          <Route path="/publications/literature/okafor-and-ikwubizo" element={<OkaforIkwubizoLiteraturePage />} />
           <Route path="/publications/:type" element={<PublicationsPage />} />
           <Route path="/admin" element={<AdminPage />} />
         </Routes>

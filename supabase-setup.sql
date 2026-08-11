@@ -8,7 +8,7 @@
 create table if not exists public.publications (
   id uuid default gen_random_uuid() primary key,
   title text not null,
-  type text not null check (type in ('journal', 'newsletter', 'monograph', 'publication')),
+  type text not null check (type in ('journal', 'literature', 'newsletter', 'monograph', 'publication')),
   authors text,
   abstract text,
   publish_date date,
@@ -16,6 +16,7 @@ create table if not exists public.publications (
   file_url text,
   external_url text,
   cover_image text,
+  detail_path text,
   created_at timestamptz default now(),
   updated_at timestamptz default now()
 );
@@ -182,12 +183,13 @@ create policy "Auth users delete events" on public.events for delete using (auth
 
 -- Sample publications data (only inserted if the table is currently empty,
 -- so rerunning this script won't create duplicates)
-insert into public.publications (title, type, authors, abstract, publish_date, volume)
+insert into public.publications (title, type, authors, abstract, publish_date, volume, file_url, detail_path)
 select * from (values
-  ('Gender Equality in Sub-Saharan Africa: Progress and Challenges', 'journal', 'Prof. O.I. Aina, Dr. O.O. Ilesanmi', 'This paper examines the multifaceted dimensions of gender equality across Sub-Saharan Africa.', '2024-03-15'::date, '1'),
-  ('CGHDS Newsletter — Q1 2025', 'newsletter', 'CGHDS Editorial Team', 'Updates from the Centre including upcoming conferences and student achievements.', '2025-01-20'::date, null),
-  ('Humanitarian Response in Crisis-Affected Communities', 'monograph', 'Mrs. I.D. Adefisoye', 'A comprehensive monograph exploring humanitarian response frameworks.', '2023-11-10'::date, '2')
-) as v(title, type, authors, abstract, publish_date, volume)
+  ('Gender Equality in Sub-Saharan Africa: Progress and Challenges', 'journal', 'Prof. O.I. Aina, Dr. O.O. Ilesanmi', 'This paper examines the multifaceted dimensions of gender equality across Sub-Saharan Africa.', '2024-03-15'::date, '1', null, null),
+  ('CGHDS Newsletter — Q1 2025', 'newsletter', 'CGHDS Editorial Team', 'Updates from the Centre including upcoming conferences and student achievements.', '2025-01-20'::date, null, null, null),
+  ('Humanitarian Response in Crisis-Affected Communities', 'monograph', 'Mrs. I.D. Adefisoye', 'A comprehensive monograph exploring humanitarian response frameworks.', '2023-11-10'::date, '2', null, null),
+  ('Women as ''Other'': Gender Bias in Male-Authored Igbo Literature', 'literature', 'Ebele Eucharia Okafor, Iwu Ikwubuzo (PhD)', 'A comparative study of two post-war Igbo novels examining how their male authors portray women, and how that portrayal shifts over time.', '2026-01-01'::date, '1', '/documents/women-as-other-gender-bias-igbo-literature.pdf', '/publications/literature/okafor-and-ikwubizo')
+) as v(title, type, authors, abstract, publish_date, volume, file_url, detail_path)
 where not exists (select 1 from public.publications);
 
 -- Sample staff data (only inserted if the table is currently empty;

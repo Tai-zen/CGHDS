@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react'
-import { useParams } from 'react-router-dom'
+import { useParams, Link } from 'react-router-dom'
 import { supabase } from '../lib/supabase'
-import { Search, Download, ExternalLink, Calendar, User, BookOpen, Newspaper, BookMarked, GraduationCap } from 'lucide-react'
+import { Search, Download, ExternalLink, ArrowUpRight, Calendar, User, BookOpen, Newspaper, BookMarked, GraduationCap, Feather } from 'lucide-react'
 
 const pageConfig = {
   journal:    { title: 'Journal',      subtitle: 'Peer-reviewed scholarly research',    icon: BookOpen,      type: 'journal' },
+  literature: { title: 'Literature',   subtitle: 'Literary criticism & analysis',       icon: Feather,       type: 'literature' },
   newsletter: { title: 'Newsletter',   subtitle: 'News, updates & announcements',       icon: Newspaper,     type: 'newsletter' },
   monograph:  { title: 'Monograph',    subtitle: 'In-depth scholarly volumes',          icon: BookMarked,    type: 'monograph' },
   all:        { title: 'Publications', subtitle: 'All research outputs from CGHDS',     icon: GraduationCap, type: null },
@@ -17,10 +18,12 @@ const sampleData = [
   { id: 4, title: 'Development Studies: A Nigerian Perspective', type: 'journal', authors: 'CGHDS Research Team', publish_date: '2024-06-01', abstract: 'An analysis of development trajectories within the Nigerian context, with implications for broader African development strategies.', volume: '3', file_url: null, external_url: null },
   { id: 5, title: 'CGHDS Newsletter — Q3 2024', type: 'newsletter', authors: 'CGHDS Editorial Team', publish_date: '2024-07-15', abstract: 'This edition covers Sickle Cell+ Club activities, lecture series highlights, and upcoming international partnerships.', volume: null, file_url: null, external_url: null },
   { id: 6, title: 'Conflict Resolution and Peace-Building: Gender Dimensions', type: 'monograph', authors: 'Prof. O.I. Aina', publish_date: '2024-09-30', abstract: 'Explores the intersections of gender and conflict, offering frameworks for gender-sensitive peace-building in post-conflict societies.', volume: '1', file_url: null, external_url: null },
+  { id: 7, title: "Women as 'Other': Gender Bias in Male-Authored Igbo Literature", type: 'literature', authors: 'Ebele Eucharia Okafor, Iwu Ikwubuzo (PhD)', publish_date: '2026-01-01', abstract: "A comparative study of two post-war Igbo novels — Nzeakọ's Nkọlị and Ofomata's Onye Chi Ya Akwatughị — examining how their male authors use language to portray women, and how that portrayal shifts between the earlier and later work.", volume: '1', file_url: '/documents/women-as-other-gender-bias-igbo-literature.pdf', external_url: null, detail_path: '/publications/literature/okafor-and-ikwubizo' },
 ]
 
 const typeStyle = {
   journal:    { bg: 'rgba(201,168,76,0.1)',   color: 'var(--gold)',       border: 'rgba(201,168,76,0.2)' },
+  literature: { bg: 'rgba(244,114,182,0.1)',  color: '#f472b6',       border: 'rgba(244,114,182,0.2)' },
   newsletter: { bg: 'rgba(59,130,246,0.1)',   color: '#60a5fa',       border: 'rgba(59,130,246,0.2)' },
   monograph:  { bg: 'rgba(168,85,247,0.1)',   color: '#c084fc',       border: 'rgba(168,85,247,0.2)' },
   publication:{ bg: 'rgba(34,197,94,0.1)',    color: '#4ade80',       border: 'rgba(34,197,94,0.2)' },
@@ -62,10 +65,16 @@ function PublicationCard({ pub }) {
         </p>
       )}
 
-      <div style={{ display: 'flex', alignItems: 'center', gap: 16, paddingTop: 16, borderTop: '1px solid rgba(255,255,255,0.05)', marginTop: 'auto' }}>
+      <div style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', gap: 16, paddingTop: 16, borderTop: '1px solid rgba(255,255,255,0.05)', marginTop: 'auto' }}>
+        {pub.detail_path && (
+          <Link to={pub.detail_path}
+            style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 14, color: 'var(--gold)', fontFamily: 'Syne, sans-serif', fontWeight: 500, textDecoration: 'none' }}>
+            <ArrowUpRight size={13} /> Read Article
+          </Link>
+        )}
         {pub.file_url && (
           <a href={pub.file_url} target="_blank" rel="noreferrer"
-            style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 14, color: 'var(--gold)', fontFamily: 'Syne, sans-serif', fontWeight: 500, textDecoration: 'none' }}>
+            style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 14, color: pub.detail_path ? 'var(--text-muted)' : 'var(--gold)', fontFamily: 'Syne, sans-serif', fontWeight: 500, textDecoration: 'none' }}>
             <Download size={13} /> Download
           </a>
         )}
@@ -75,7 +84,7 @@ function PublicationCard({ pub }) {
             <ExternalLink size={13} /> View Online
           </a>
         )}
-        {!pub.file_url && !pub.external_url && (
+        {!pub.file_url && !pub.external_url && !pub.detail_path && (
           <span className="font-display" style={{ color: 'var(--text-faint)', fontSize: 12 }}>No download available</span>
         )}
       </div>
@@ -137,7 +146,7 @@ export default function PublicationsPage() {
 
           {type === 'all' && (
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, marginTop: 32 }}>
-              {['all', 'journal', 'newsletter', 'monograph'].map(t => (
+              {['all', 'journal', 'literature', 'newsletter', 'monograph'].map(t => (
                 <button key={t} onClick={() => setFilter(t)} className="font-display"
                   style={{ padding: '8px 20px', borderRadius: 999, fontSize: 11, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', cursor: 'pointer', transition: 'all 0.2s', border: 'none',
                     background: filter === t ? '#C9A84C' : 'rgba(255,255,255,0.05)',

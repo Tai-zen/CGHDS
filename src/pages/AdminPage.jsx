@@ -2,14 +2,17 @@ import { useState, useEffect } from 'react'
 import { useAuth } from '../context/AuthContext'
 import { useTheme } from '../context/ThemeContext'
 import { supabase, uploadImage } from '../lib/supabase'
-import { LogOut, Plus, Trash2, Edit3, Save, X, BookOpen, Newspaper, BookMarked, GraduationCap, BarChart2, CheckCircle, AlertCircle, ArrowUpRight, Images, Users, Sun, Moon, Calendar, FileText } from 'lucide-react'
+import { LogOut, Plus, Trash2, Edit3, Save, X, BookOpen, Newspaper, BookMarked, GraduationCap, Feather, BarChart2, CheckCircle, AlertCircle, ArrowUpRight, Images, Users, Sun, Moon, Calendar, FileText } from 'lucide-react'
 
 const typeOptions = [
   { value: 'journal', label: 'Journal', icon: BookOpen },
+  { value: 'literature', label: 'Literature', icon: Feather },
   { value: 'newsletter', label: 'Newsletter', icon: Newspaper },
   { value: 'monograph', label: 'Monograph', icon: BookMarked },
   { value: 'publication', label: 'Publication', icon: GraduationCap },
 ]
+
+const typeIcon = (type) => (typeOptions.find(t => t.value === type)?.icon) || GraduationCap
 
 const staffCategoryOptions = [
   { value: 'current_executive', label: 'Current Executive' },
@@ -83,6 +86,8 @@ function PubForm({ initial, onSave, onCancel, loading }) {
   const [form, setForm] = useState(initial || emptyPub)
   const [uploading, setUploading] = useState(false)
   const [uploadError, setUploadError] = useState('')
+  const [docUploading, setDocUploading] = useState(false)
+  const [docUploadError, setDocUploadError] = useState('')
   const set = (k, v) => setForm(f => ({ ...f, [k]: v }))
   const inp = { width: '100%', background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: 12, padding: '12px 16px', color: '#fff', fontSize: 14, fontFamily: 'Syne, sans-serif', outline: 'none', boxSizing: 'border-box' }
 
@@ -97,6 +102,23 @@ function PubForm({ initial, onSave, onCancel, loading }) {
       setUploadError(err.message || 'Upload failed')
     } finally {
       setUploading(false)
+      e.target.value = ''
+    }
+  }
+
+  // Uploads the source document (PDF etc.) to Supabase Storage and fills in file_url,
+  // so the publication becomes downloadable straight from the card on the public site.
+  const handleDocFile = async (e) => {
+    const file = e.target.files[0]
+    if (!file) return
+    setDocUploading(true); setDocUploadError('')
+    try {
+      const url = await uploadImage(file, 'documents')
+      set('file_url', url)
+    } catch (err) {
+      setDocUploadError(err.message || 'Upload failed')
+    } finally {
+      setDocUploading(false)
       e.target.value = ''
     }
   }
@@ -140,9 +162,21 @@ function PubForm({ initial, onSave, onCancel, loading }) {
           <label style={{ color: 'rgba(255,255,255,0.3)', fontSize: 11, fontFamily: 'Syne, sans-serif', textTransform: 'uppercase', letterSpacing: '0.1em', display: 'block', marginBottom: 6 }}>Abstract</label>
           <textarea value={form.abstract} onChange={e => set('abstract', e.target.value)} rows={3} placeholder="Brief description..." style={{ ...inp, resize: 'none' }} />
         </div>
+        <div style={{ gridColumn: '1/-1' }}>
+          <label style={{ color: 'rgba(255,255,255,0.3)', fontSize: 11, fontFamily: 'Syne, sans-serif', textTransform: 'uppercase', letterSpacing: '0.1em', display: 'block', marginBottom: 6 }}>Document File (PDF)</label>
+          <input type="file" accept="application/pdf,.doc,.docx" onChange={handleDocFile} disabled={docUploading} style={inp} />
+          {docUploading && <p style={{ color: '#C9A84C', fontSize: 12, marginTop: 6, fontFamily: 'Syne, sans-serif' }}>Uploading…</p>}
+          {docUploadError && <p style={{ color: '#f87171', fontSize: 12, marginTop: 6, fontFamily: 'Syne, sans-serif' }}>{docUploadError}</p>}
+          <p style={{ color: 'var(--text-faint)', fontSize: 11, marginTop: 6, fontFamily: 'Syne, sans-serif' }}>Uploads the document and fills in the File URL below — or paste a link directly.</p>
+        </div>
         <div>
           <label style={{ color: 'rgba(255,255,255,0.3)', fontSize: 11, fontFamily: 'Syne, sans-serif', textTransform: 'uppercase', letterSpacing: '0.1em', display: 'block', marginBottom: 6 }}>File URL (PDF)</label>
           <input value={form.file_url} onChange={e => set('file_url', e.target.value)} placeholder="https://..." style={inp} />
+          {form.file_url && (
+            <a href={form.file_url} target="_blank" rel="noreferrer" style={{ display: 'inline-flex', alignItems: 'center', gap: 6, marginTop: 8, color: '#C9A84C', fontSize: 12, fontFamily: 'Syne, sans-serif', textDecoration: 'none' }}>
+              View / download current file ↗
+            </a>
+          )}
         </div>
         <div>
           <label style={{ color: 'rgba(255,255,255,0.3)', fontSize: 11, fontFamily: 'Syne, sans-serif', textTransform: 'uppercase', letterSpacing: '0.1em', display: 'block', marginBottom: 6 }}>External URL</label>
@@ -733,10 +767,12 @@ export default function AdminPage() {
                 <BookOpen size={40} style={{ color: 'var(--text-faint)', margin: '0 auto 16px', display: 'block' }} />
                 <p style={{ color: 'var(--text-muted)', fontFamily: 'Syne, sans-serif', fontSize: 18, fontWeight: 700 }}>No publications yet.</p>
               </div>
-            ) : publications.map(pub => (
+            ) : publications.map(pub => {
+              const PubIcon = typeIcon(pub.type)
+              return (
               <div key={pub.id} style={rowStyle}>
                 <div style={iconBoxStyle('#C9A84C')}>
-                  {pub.type === 'journal' ? <BookOpen size={14} style={{ color: 'var(--gold)' }} /> : <GraduationCap size={14} style={{ color: 'var(--gold)' }} />}
+                  <PubIcon size={14} style={{ color: 'var(--gold)' }} />
                 </div>
                 <div style={{ flex: 1, minWidth: 0 }}>
                   <p style={{ color: 'var(--text-primary)', fontFamily: 'Syne, sans-serif', fontWeight: 700, fontSize: 14, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{pub.title}</p>
@@ -747,7 +783,8 @@ export default function AdminPage() {
                   <button onClick={() => deletePub(pub.id)} style={{ padding: 8, background: 'none', border: 'none', cursor: 'pointer', color: 'var(--text-faint)', borderRadius: 8, transition: 'color 0.2s' }} onMouseEnter={e => e.currentTarget.style.color = '#f87171'} onMouseLeave={e => e.currentTarget.style.color = 'var(--text-faint)'}><Trash2 size={14} /></button>
                 </div>
               </div>
-            ))}
+              )
+            })}
           </div>
         )}
 

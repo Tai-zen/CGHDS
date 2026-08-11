@@ -124,12 +124,14 @@ export default function Home() {
             </div>
           )}
 
-          <h1 className="font-display animate-fade-up delay-1" style={{ fontWeight: 800, lineHeight: 0.95, marginBottom: 32, fontSize: 'clamp(48px, 8vw, 110px)' }}>
+          <h1 className="font-display animate-fade-up delay-1" style={{ fontWeight: 800, lineHeight: 0.95, marginBottom: 32, fontSize: 'clamp(48px, 8vw, 110px)', overflowWrap: 'break-word', wordBreak: 'break-word', hyphens: 'auto' }}>
             <span style={{ color: 'var(--text-primary)' }}>Centre for Gender,</span>
             <br />
             <span className="font-serif text-gold" style={{ fontSize: 'clamp(44px, 7.5vw, 104px)', fontStyle: 'italic' }}>Humanitarian</span>
             <br />
-            <span style={{ color: 'var(--text-primary)' }}>&amp; Development <span className="font-serif text-gold" style={{ fontStyle: 'italic' }}>Studies.</span></span>
+            <span style={{ color: 'var(--text-primary)' }}>&amp; Development</span>
+            <br />
+            <span className="font-serif text-gold" style={{ fontStyle: 'italic' }}>Studies.</span>
           </h1>
 
           <p className="animate-fade-up delay-2" style={{ color: 'var(--text-secondary)', fontSize: 18, maxWidth: 480, margin: '0 auto 48px', fontWeight: 300, lineHeight: 1.7 }}>
