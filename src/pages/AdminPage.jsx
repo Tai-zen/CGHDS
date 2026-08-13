@@ -2,7 +2,53 @@ import { useState, useEffect } from 'react'
 import { useAuth } from '../context/AuthContext'
 import { useTheme } from '../context/ThemeContext'
 import { supabase, uploadImage } from '../lib/supabase'
-import { LogOut, Plus, Trash2, Edit3, Save, X, BookOpen, Newspaper, BookMarked, GraduationCap, Feather, BarChart2, CheckCircle, AlertCircle, ArrowUpRight, Images, Users, Sun, Moon, Calendar, FileText, Menu } from 'lucide-react'
+import { LogOut, Plus, Trash2, Edit3, Save, X, BookOpen, Newspaper, BookMarked, GraduationCap, Feather, BarChart2, CheckCircle, AlertCircle, ArrowUpRight, Images, Users, Sun, Moon, Calendar, FileText, Menu, CalendarDays } from 'lucide-react'
+
+// Formats a YYYY-MM-DD value from a native date input into a friendly display string, e.g. "November 10, 2026"
+function formatPickedDate(isoDate) {
+  if (!isoDate) return ''
+  const [y, m, d] = isoDate.split('-').map(Number)
+  const dt = new Date(y, m - 1, d)
+  return dt.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })
+}
+
+// A free-text date field with a calendar-icon button that opens a native date picker.
+// Picking a date appends/inserts the formatted date into the text value, so ranges like
+// "November 10–14, 2026" typed by hand still work, while still giving a real calendar UI.
+function DateTextInput({ value, onChange, placeholder, inputStyle }) {
+  const handlePick = (e) => {
+    const picked = formatPickedDate(e.target.value)
+    if (!picked) return
+    onChange(value ? `${value}–${picked}` : picked)
+    e.target.value = ''
+  }
+
+  return (
+    <div style={{ position: 'relative' }}>
+      <input
+        value={value}
+        onChange={e => onChange(e.target.value)}
+        placeholder={placeholder}
+        style={{ ...inputStyle, paddingRight: 44 }}
+      />
+      <label
+        title="Pick a date from the calendar"
+        style={{
+          position: 'absolute', right: 6, top: '50%', transform: 'translateY(-50%)',
+          width: 32, height: 32, display: 'flex', alignItems: 'center', justifyContent: 'center',
+          borderRadius: 8, cursor: 'pointer', color: 'var(--gold, #C9A84C)'
+        }}
+      >
+        <CalendarDays size={16} />
+        <input
+          type="date"
+          onChange={handlePick}
+          style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', opacity: 0, cursor: 'pointer' }}
+        />
+      </label>
+    </div>
+  )
+}
 
 const typeOptions = [
   { value: 'journal', label: 'Journal', icon: BookOpen },
@@ -352,7 +398,7 @@ function UpcomingEventForm({ initial, onSave, onCancel, loading }) {
         </div>
         <div>
           <label style={{ color: 'rgba(255,255,255,0.3)', fontSize: 11, fontFamily: 'Syne, sans-serif', textTransform: 'uppercase', letterSpacing: '0.1em', display: 'block', marginBottom: 6 }}>Date / Date Range <span style={{ color: 'rgba(255,255,255,0.2)', textTransform: 'none' }}>(optional — shown in gold)</span></label>
-          <input value={form.event_date} onChange={e => set('event_date', e.target.value)} placeholder="e.g. November 10th–14th, 2026" style={inp} />
+          <DateTextInput value={form.event_date} onChange={v => set('event_date', v)} placeholder="e.g. November 10th–14th, 2026" inputStyle={inp} />
         </div>
         <div>
           <label style={{ color: 'rgba(255,255,255,0.3)', fontSize: 11, fontFamily: 'Syne, sans-serif', textTransform: 'uppercase', letterSpacing: '0.1em', display: 'block', marginBottom: 6 }}>Internal Link <span style={{ color: 'rgba(255,255,255,0.2)', textTransform: 'none' }}>(optional — route like /events/2025-international-conference)</span></label>
@@ -411,7 +457,7 @@ function EventCardForm({ initial, onSave, onCancel, loading }) {
         </div>
         <div>
           <label style={{ color: 'rgba(255,255,255,0.3)', fontSize: 11, fontFamily: 'Syne, sans-serif', textTransform: 'uppercase', letterSpacing: '0.1em', display: 'block', marginBottom: 6 }}>Date</label>
-          <input value={form.date} onChange={e => set('date', e.target.value)} placeholder="e.g. November 10–14, 2026" style={inp} />
+          <DateTextInput value={form.date} onChange={v => set('date', v)} placeholder="e.g. November 10–14, 2026" inputStyle={inp} />
         </div>
         <div style={{ gridColumn: '1/-1' }}>
           <label style={{ color: 'rgba(255,255,255,0.3)', fontSize: 11, fontFamily: 'Syne, sans-serif', textTransform: 'uppercase', letterSpacing: '0.1em', display: 'block', marginBottom: 6 }}>Description</label>
