@@ -35,7 +35,7 @@ const events = [
     description: '"Recent Advances in Gender, Humanitarianism and Development" — November 10th–14th, 2025.',
     link: '/events/2025-international-conference',
     internal: true,
-    img: 'http://cghds.run.edu.ng/assets/img/events/novcghds.jpg',
+    img: './images/novcghds.jpg',
   },
   {
     tag: 'LECTURE',
@@ -100,7 +100,7 @@ export default function Home() {
       <section style={{ position: 'relative', minHeight: '100vh', display: 'flex', flexDirection: 'column', justifyContent: 'center', overflow: 'hidden' }}>
         {/* BG */}
         <div style={{ position: 'absolute', inset: 0 }}>
-          <div style={{ position: 'absolute', inset: 0, backgroundImage: "url('public/images/IMG_7105.JPG')", backgroundSize: 'cover', backgroundPosition: 'center', opacity: 'var(--img-opacity)' }} />
+          <div style={{ position: 'absolute', inset: 0, backgroundImage: "url('./images/IMG_7105.JPG')", backgroundSize: 'cover', backgroundPosition: 'center', opacity: 'var(--img-opacity)' }} />
           <div style={{ position: 'absolute', inset: 0, background: 'var(--hero-overlay)' }} />
         </div>
 

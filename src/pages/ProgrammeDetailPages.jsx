@@ -112,7 +112,7 @@ export function GenderDevelopmentPage() {
             <img src="public/images/grad-course-two.jpg"
               alt="Gender and Development Studies"
               style={{ width: '100%', height: '100%', objectFit: 'cover', opacity: 0.8 }}
-              onError={e => { e.target.src = 'public/images/cghdsnov2.jpg' }} />
+              onError={e => { e.target.src = './images/cghdsnov2.jpg' }} />
           </div>
         </div>
 
@@ -188,7 +188,7 @@ export function HumanitarianDevelopmentPage() {
             <img src="public/images/grad-course-one.jpg"
               alt="Humanitarian and Development Studies"
               style={{ width: '100%', height: '100%', objectFit: 'cover', opacity: 0.8 }}
-              onError={e => { e.target.src = 'public/images/cghdsnov2.jpg' }} />
+              onError={e => { e.target.src = './images/cghdsnov2.jpg' }} />
           </div>
         </div>
 
@@ -235,7 +235,7 @@ export function ShortCoursesPage() {
             <img src="public/images/student1.jpg"
               alt="RUN Sickle Cell+ Club"
               style={{ width: '100%', height: '100%', objectFit: 'cover', opacity: 0.8 }}
-              onError={e => { e.target.src = 'public/images/cghdsnov2.jpg' }} />
+              onError={e => { e.target.src = './images/cghdsnov2.jpg' }} />
           </div>
         </div>
 

@@ -215,7 +215,7 @@ export function ConferencePage() {
             </div>
             <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
               <div style={{ borderRadius: 20, overflow: "hidden", height: 300, flexShrink: 0 }}>
-                <img src="http://cghds.run.edu.ng/assets/img/cghdsnov2.jpg" alt="2025 CGHDS International Conference" style={{ width: "100%", height: "100%", objectFit: "cover", opacity: 0.85 }} />
+                <img src="./images/cghdsnov2.jpg" alt="2025 CGHDS International Conference" style={{ width: "100%", height: "100%", objectFit: "cover", opacity: 0.85 }} />
               </div>
               <Card>
                 <p className="section-label" style={{ fontSize: 9, marginBottom: 16 }}>Quick Actions</p>
