@@ -75,12 +75,12 @@ export function AboutPage() {
 
               <div style={{ marginTop: 28, display: 'flex', flexDirection: 'column', gap: 16 }}>
                 {[
-                  { label: 'Gender and Development Studies', desc: 'The Gender and Development track explores the intersectionality of gender and development at the levels of theory, practice/policy & planning for development.' },
-                  { label: 'Humanitarian and Development Studies across academic levels', desc: 'This track will expose students to the overall humanitarian system and the context of emergencies and disasters with multiple effects on livelihoods, food security, nutrition, forced migration, protection, and governance; and how these overlap with development, conflict management, human rights, and gender analytical frameworks.' },
+                  { label: 'Gender and Development Studies', description: 'The Gender and Development track explores the intersectionality of gender and development at the levels of theory, practice/policy & planning for development.' },
+                  { label: 'Humanitarian and Development Studies across academic levels', description: 'This track will expose students to the overall humanitarian system and the context of emergencies and disasters with multiple effects on livelihoods, food security, nutrition, forced migration, protection, and governance; and how these overlap with development, conflict management, human rights, and gender analytical frameworks.' },
                 ].map((track, i) => (
                   <div key={i} className="card-dark" style={{ padding: '20px 24px', borderLeft: '3px solid var(--gold)' }}>
                     <p style={{ color: 'var(--text-primary)', fontFamily: 'Syne, sans-serif', fontWeight: 700, fontSize: 14, marginBottom: 6 }}>{i + 1}. {track.label}</p>
-                    <p style={{ color: 'var(--text-secondary)', fontSize: 13, lineHeight: 1.7 }}>{track.desc}</p>
+                    <p style={{ color: 'var(--text-secondary)', fontSize: 13, lineHeight: 1.7 }}>{track.description}</p>
                   </div>
                 ))}
               </div>
@@ -94,7 +94,7 @@ export function AboutPage() {
             <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
               <div style={{ borderRadius: 20, overflow: 'hidden', height: 360 }}>
                 <img src="http://cghds.run.edu.ng/assets/img/about/who-we-are-1.jpg"
-                  onError={e => { e.target.src = 'http://cghds.run.edu.ng/assets/img/CGHDS_PHOTO_GALLERY/IMG_7105.JPG' }}
+                  onError={e => { e.target.src = 'public/images/IMG_7105.JPG' }}
                   alt="CGHDS group photo" style={{ width: '100%', height: '100%', objectFit: 'cover', opacity: 0.85 }} />
               </div>
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
@@ -177,14 +177,14 @@ export function AboutPage() {
           <p className="section-label" style={{ marginBottom: 40 }}>Special Initiatives</p>
           <div style={{ display: 'grid', gap: 20 }} className="three-col">
             {[
-              { num: '01', title: 'Sickle Cell+ Club', desc: "Providing support, advocacy, and community for those living with sickle cell disease at Redeemer's University." },
-              { num: '02', title: 'CGHDS Lecture Series', desc: 'Regular lecture series exploring gender, humanitarian action, and development topics with leading scholars.' },
-              { num: '03', title: 'International Consortium', desc: 'Global partnerships advancing research and collaboration across institutions worldwide.' },
+              { num: '01', title: 'Sickle Cell+ Club', description: "Providing support, advocacy, and community for those living with sickle cell disease at Redeemer's University." },
+              { num: '02', title: 'CGHDS Lecture Series', description: 'Regular lecture series exploring gender, humanitarian action, and development topics with leading scholars.' },
+              { num: '03', title: 'International Consortium', description: 'Global partnerships advancing research and collaboration across institutions worldwide.' },
             ].map((item, i) => (
               <div key={i} className="card-dark hover-lift" style={{ padding: 32 }}>
                 <p className="font-display" style={{ fontWeight: 800, color: 'var(--border-card)', fontSize: 56, marginBottom: 24, lineHeight: 1 }}>{item.num}</p>
                 <h3 className="font-display" style={{ fontWeight: 700, color: 'var(--text-primary)', fontSize: 20, marginBottom: 12 }}>{item.title}</h3>
-                <p style={{ color: 'var(--text-secondary)', fontSize: 14, lineHeight: 1.6 }}>{item.desc}</p>
+                <p style={{ color: 'var(--text-secondary)', fontSize: 14, lineHeight: 1.6 }}>{item.description}</p>
               </div>
             ))}
           </div>
@@ -271,9 +271,9 @@ export function ProgrammesPage() {
         <C>
           <div style={{ display: 'grid', gap: 20 }} className="three-col">
             {[
-              { title: 'Gender & Development Studies', img: 'http://cghds.run.edu.ng/assets/img/CGHDS_PHOTO_GALLERY/grad-course-two.jpg', desc: 'Explore the multidimensional aspects of gender and its intersections with development, society, and policy.' },
-              { title: 'Humanitarian & Development Studies', img: 'http://cghds.run.edu.ng/assets/img/CGHDS_PHOTO_GALLERY/grad-course-one.jpg', desc: 'Gain expertise in humanitarian action, crisis response, and sustainable development frameworks.' },
-              { title: 'Short Courses & Programmes', img: 'http://cghds.run.edu.ng/assets/img/CGHDS_PHOTO_GALLERY/student1.jpg', desc: 'Flexible short courses for professionals seeking to enhance their skills in gender and development.' },
+              { title: 'Gender & Development Studies', img: 'public/images/grad-course-two.jpg', description: 'Explore the multidimensional aspects of gender and its intersections with development, society, and policy.' },
+              { title: 'Humanitarian & Development Studies', img: 'public/images/grad-course-one.jpg', description: 'Gain expertise in humanitarian action, crisis response, and sustainable development frameworks.' },
+              { title: 'Short Courses & Programmes', img: 'public/images/student1.jpg', description: 'Flexible short courses for professionals seeking to enhance their skills in gender and development.' },
             ].map((prog, i) => (
               <Link key={i} to={PROG_ROUTES[i]} className="card-dark hover-lift" style={{ overflow: 'hidden', textDecoration: 'none', display: 'block' }}>
                 <div style={{ position: 'relative', height: 224, overflow: 'hidden' }}>
@@ -282,7 +282,7 @@ export function ProgrammesPage() {
                 </div>
                 <div style={{ padding: 28 }}>
                   <h3 className="font-display" style={{ fontWeight: 700, color: 'var(--text-primary)', fontSize: 20, marginBottom: 12 }}>{prog.title}</h3>
-                  <p style={{ color: 'var(--text-secondary)', fontSize: 14, lineHeight: 1.6, marginBottom: 20 }}>{prog.desc}</p>
+                  <p style={{ color: 'var(--text-secondary)', fontSize: 14, lineHeight: 1.6, marginBottom: 20 }}>{prog.description}</p>
                   <span style={{ display: 'inline-flex', alignItems: 'center', gap: 8, color: 'var(--gold)', fontSize: 14, fontFamily: 'Syne, sans-serif', fontWeight: 500 }}>
                     Learn More <ArrowRight size={14} />
                   </span>
@@ -314,8 +314,8 @@ export function EventsPage() {
       tag: 'CONFERENCE',
       date: 'November 10–14, 2025',
       title: '2025 CGHDS International Conference',
-      img: 'http://cghds.run.edu.ng/assets/img/cghdsnov2.jpg',
-      desc: 'The Centre for Gender, Humanitarianism, and Development Studies (CGHDS), Redeemer\'s University, Nigeria, announces its forthcoming international conference on "Recent Advances in Gender, Humanitarianism and Development." The 5-Day Conference (CGHDS/IC2025) is scheduled to take place on the 10th to 14th of November 2025 on the University Campus in Ede, one of the most popular ancient towns in Yoruba Land.',
+      img: 'public/images/cghdsnov2.jpg',
+      description: 'The Centre for Gender, Humanitarianism, and Development Studies (CGHDS), Redeemer\'s University, Nigeria, announces its forthcoming international conference on "Recent Advances in Gender, Humanitarianism and Development." The 5-Day Conference (CGHDS/IC2025) is scheduled to take place on the 10th to 14th of November 2025 on the University Campus in Ede, one of the most popular ancient towns in Yoruba Land.',
       link: '/events/2025-international-conference',
       internal: true,
     },
@@ -323,8 +323,8 @@ export function EventsPage() {
       tag: 'WORKSHOP',
       date: '21 October 2025',
       title: 'Pre-conference Workshop Presentation by Prof. Albert Olawale Isaac',
-      img: 'http://cghds.run.edu.ng/assets/img/cghdsnov2.jpg',
-      desc: 'Pre-conference workshop presentation delivered by Professor Albert Olawale Isaac on 21 October 2025. Topic: Social Construction of Gender, Humanitarianism and Development. Department of Peace, Security and Humanitarian Studies, Faculty of Multidisciplinary Studies, University of Ibadan.',
+      img: 'public/images/cghdsnov2.jpg',
+      description: 'Pre-conference workshop presentation delivered by Professor Albert Olawale Isaac on 21 October 2025. Topic: Social Construction of Gender, Humanitarianism and Development. Department of Peace, Security and Humanitarian Studies, Faculty of Multidisciplinary Studies, University of Ibadan.',
       link: '/events/pre-conference-workshop',
       internal: true,
     },
@@ -332,16 +332,16 @@ export function EventsPage() {
       tag: 'LECTURE',
       date: '3 October 2023',
       title: 'Lecture Series on Humanitarian Action and Disaster Management',
-      img: 'http://cghds.run.edu.ng/assets/img/events/HUMANITARIAN-nd-DISASTER.png',
-      desc: 'The CGHDS Lecture Series delves into Humanitarian Action and Disaster Management, offering valuable insights and expertise in addressing crises and managing disasters effectively. Participants gain a deeper understanding of the principles and practices that guide effective humanitarian responses in complex emergencies.',
+      img: 'public/images/HUMANITARIAN-nd-DISASTER.png',
+      description: 'The CGHDS Lecture Series delves into Humanitarian Action and Disaster Management, offering valuable insights and expertise in addressing crises and managing disasters effectively. Participants gain a deeper understanding of the principles and practices that guide effective humanitarian responses in complex emergencies.',
       link: 'http://cghds.run.edu.ng',
     },
     {
       tag: 'LECTURE',
       date: '21 September 2023',
       title: 'CGHDS Lecture Series on Gender, Conflict and Peace-Building',
-      img: 'http://cghds.run.edu.ng/assets/img/events/GENDER-CONFLICT-PEACE-BUILDING.png',
-      desc: 'Through insightful lectures and discussions, this lecture series delves into innovative approaches to foster gender equality and inclusivity in peace-building efforts. The series explores the intersection of gender dynamics and conflict resolution, highlighting transformative frameworks for building lasting peace.',
+      img: 'public/images/GENDER-CONFLICT-PEACE-BUILDING.png',
+      description: 'Through insightful lectures and discussions, this lecture series delves into innovative approaches to foster gender equality and inclusivity in peace-building efforts. The series explores the intersection of gender dynamics and conflict resolution, highlighting transformative frameworks for building lasting peace.',
       link: 'http://cghds.run.edu.ng',
     },
     {
@@ -349,7 +349,7 @@ export function EventsPage() {
       date: '19 August 2023',
       title: 'World Humanitarian Day',
       img: 'http://cghds.run.edu.ng/assets/img/events/world-humanitarian-day.png',
-      desc: 'A day dedicated to honouring humanitarian efforts worldwide, recognising the courage and dedication of aid workers, and raising awareness about the need for humanitarian action to support those in crisis and vulnerable situations. CGHDS joined the global community in commemorating this important occasion.',
+      description: 'A day dedicated to honouring humanitarian efforts worldwide, recognising the courage and dedication of aid workers, and raising awareness about the need for humanitarian action to support those in crisis and vulnerable situations. CGHDS joined the global community in commemorating this important occasion.',
       link: 'http://cghds.run.edu.ng',
     },
     {
@@ -357,14 +357,14 @@ export function EventsPage() {
       date: 'July 2023',
       title: '2-Day Capacity Building Training Workshop (CBTW)',
       img: 'http://cghds.run.edu.ng/assets/img/events/capacity-building-workshop.png',
-      desc: 'The CGHDS Capacity Building Training Workshop (CBTW) is focused on enhancing participants\' skills and knowledge in critical areas of gender, humanitarian, and development studies. The two-day workshop brought together professionals, researchers, and practitioners to strengthen core competencies needed for impactful work in these fields.',
+      description: 'The CGHDS Capacity Building Training Workshop (CBTW) is focused on enhancing participants\' skills and knowledge in critical areas of gender, humanitarian, and development studies. The two-day workshop brought together professionals, researchers, and practitioners to strengthen core competencies needed for impactful work in these fields.',
       link: 'http://cghds.run.edu.ng',
     },
   ]
 
   // Combine: DB events first (newest), then static events
   const allEvents = [
-    ...dbEvents.map(ev => ({ tag: ev.tag, date: ev.date, title: ev.title, img: ev.img, desc: ev.desc, link: ev.link, internal: ev.internal })),
+    ...dbEvents.map(ev => ({ tag: ev.tag, date: ev.date, title: ev.title, img: ev.img, description: ev.description, link: ev.link, internal: ev.internal })),
     ...staticEvents,
   ]
 
@@ -387,7 +387,7 @@ export function EventsPage() {
                     <span className="font-display" style={{ color: 'var(--text-muted)', fontSize: 12 }}>{ev.date}</span>
                   </div>
                   <h3 className="font-display" style={{ fontWeight: 700, color: 'var(--text-primary)', fontSize: 22, marginBottom: 12 }}>{ev.title}</h3>
-                  <p style={{ color: 'var(--text-secondary)', fontSize: 14, lineHeight: 1.6, marginBottom: ev.internal ? 20 : 0 }}>{ev.desc}</p>
+                  <p style={{ color: 'var(--text-secondary)', fontSize: 14, lineHeight: 1.6, marginBottom: ev.internal ? 20 : 0 }}>{ev.description}</p>
                   {ev.internal && (
                     <span className="font-display" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, color: 'var(--gold)', fontSize: 14, fontWeight: 500 }}>
                       View Details <ArrowRight size={14} />

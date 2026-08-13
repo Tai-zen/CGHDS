@@ -12,10 +12,10 @@ const stats = [
 ]
 
 const focuses = [
-  { icon: Scale, title: 'Gender & Policy', desc: 'Designing policies and programs for gender equality, conflict resolution, and sustainable peace-building across Africa.' },
-  { icon: Globe, title: 'Humanitarian Action', desc: 'Developing guidelines for poverty reduction, humanitarian response, and pro-poor development strategies.' },
-  { icon: BarChart2, title: 'Research & Consultancy', desc: 'Engaging in rigorous research, consultancies, and addressing socio-economic, political, and gender-related issues.' },
-  { icon: GraduationCap, title: 'Academic Excellence', desc: 'Equipping students and professionals with analytical skills for understanding gender and development at all levels.' },
+  { icon: Scale, title: 'Gender & Policy', description: 'Designing policies and programs for gender equality, conflict resolution, and sustainable peace-building across Africa.' },
+  { icon: Globe, title: 'Humanitarian Action', description: 'Developing guidelines for poverty reduction, humanitarian response, and pro-poor development strategies.' },
+  { icon: BarChart2, title: 'Research & Consultancy', description: 'Engaging in rigorous research, consultancies, and addressing socio-economic, political, and gender-related issues.' },
+  { icon: GraduationCap, title: 'Academic Excellence', description: 'Equipping students and professionals with analytical skills for understanding gender and development at all levels.' },
 ]
 
 const executives = [
@@ -32,7 +32,7 @@ const events = [
     tag: 'CONFERENCE',
     date: { day: '10', month: 'NOV', year: '2025' },
     title: '2025 International Conference',
-    desc: '"Recent Advances in Gender, Humanitarianism and Development" — November 10th–14th, 2025.',
+    description: '"Recent Advances in Gender, Humanitarianism and Development" — November 10th–14th, 2025.',
     link: '/events/2025-international-conference',
     internal: true,
     img: 'http://cghds.run.edu.ng/assets/img/events/novcghds.jpg',
@@ -41,10 +41,10 @@ const events = [
     tag: 'LECTURE',
     date: { day: '21', month: 'SEP', year: '2023' },
     title: 'Gender, Conflict & Peace-Building',
-    desc: 'Lecture series on innovative approaches to gender equality in peace-building efforts.',
+    description: 'Lecture series on innovative approaches to gender equality in peace-building efforts.',
     link: 'http://cghds.run.edu.ng',
     internal: false,
-    img: 'http://cghds.run.edu.ng/assets/img/events/GENDER-CONFLICT-PEACE-BUILDING.png',
+    img: 'public/images/GENDER-CONFLICT-PEACE-BUILDING.png',
   },
 ]
 
@@ -89,7 +89,7 @@ export default function Home() {
 
   // Show newest DB events first, then pad with the static fallback events up to 2 total
   const displayEvents = [
-    ...dbEvents.map(ev => ({ tag: ev.tag, date: parseEventDate(ev.date), title: ev.title, desc: ev.desc, link: ev.link, internal: ev.internal, img: ev.img })),
+    ...dbEvents.map(ev => ({ tag: ev.tag, date: parseEventDate(ev.date), title: ev.title, description: ev.description, link: ev.link, internal: ev.internal, img: ev.img })),
     ...events,
   ].slice(0, 2)
 
@@ -205,7 +205,7 @@ export default function Home() {
                     </div>
                     <div>
                       <h3 className="font-display" style={{ fontWeight: 700, color: 'var(--text-primary)', fontSize: 16, marginBottom: 6 }}>{f.title}</h3>
-                      <p style={{ color: 'var(--text-secondary)', fontSize: 14, lineHeight: 1.6 }}>{f.desc}</p>
+                      <p style={{ color: 'var(--text-secondary)', fontSize: 14, lineHeight: 1.6 }}>{f.description}</p>
                     </div>
                   </div>
                 )
@@ -246,7 +246,7 @@ export default function Home() {
                   </div>
                   <div style={{ padding: 24 }}>
                     <h3 className="font-display" style={{ fontWeight: 700, color: 'var(--text-primary)', fontSize: 20, marginBottom: 8 }}>{ev.title}</h3>
-                    <p style={{ color: 'var(--text-secondary)', fontSize: 14, lineHeight: 1.6, marginBottom: ev.internal ? 16 : 0 }}>{ev.desc}</p>
+                    <p style={{ color: 'var(--text-secondary)', fontSize: 14, lineHeight: 1.6, marginBottom: ev.internal ? 16 : 0 }}>{ev.description}</p>
                     {ev.internal && (
                       <span className="font-display" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, color: 'var(--gold)', fontSize: 14, fontWeight: 500 }}>
                         View <ArrowRight size={14} />
@@ -314,9 +314,9 @@ export default function Home() {
             {/* Right stacked */}
             <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
               {[
-                { label: 'Journal', path: '/publications/journal', desc: 'Peer-reviewed academic journals', icon: BookOpen },
-                { label: 'Newsletter', path: '/publications/newsletter', desc: 'Latest news & updates', icon: Newspaper },
-                { label: 'Monograph', path: '/publications/monograph', desc: 'In-depth scholarly volumes', icon: BookMarked },
+                { label: 'Journal', path: '/publications/journal', description: 'Peer-reviewed academic journals', icon: BookOpen },
+                { label: 'Newsletter', path: '/publications/newsletter', description: 'Latest news & updates', icon: Newspaper },
+                { label: 'Monograph', path: '/publications/monograph', description: 'In-depth scholarly volumes', icon: BookMarked },
               ].map((item, i) => (
                 <Link key={i} to={item.path} className="card-dark hover-lift" style={{ padding: 24, display: 'flex', alignItems: 'center', justifyContent: 'space-between', textDecoration: 'none' }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
