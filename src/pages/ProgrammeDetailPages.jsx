@@ -109,10 +109,10 @@ export function GenderDevelopmentPage() {
             </p>
           </div>
           <div style={{ borderRadius: 20, overflow: 'hidden', height: 320 }}>
-            <img src="http://cghds.run.edu.ng/assets/img/CGHDS_PHOTO_GALLERY/grad-course-two.jpg"
+            <img src="public/images/grad-course-two.jpg"
               alt="Gender and Development Studies"
               style={{ width: '100%', height: '100%', objectFit: 'cover', opacity: 0.8 }}
-              onError={e => { e.target.src = 'http://cghds.run.edu.ng/assets/img/CGHDS_PHOTO_GALLERY/IMG_7105.JPG' }} />
+              onError={e => { e.target.src = 'public/images/cghdsnov2.jpg' }} />
           </div>
         </div>
 
@@ -185,10 +185,10 @@ export function HumanitarianDevelopmentPage() {
             </p>
           </div>
           <div style={{ borderRadius: 20, overflow: 'hidden', height: 320 }}>
-            <img src="http://cghds.run.edu.ng/assets/img/CGHDS_PHOTO_GALLERY/grad-course-one.jpg"
+            <img src="public/images/grad-course-one.jpg"
               alt="Humanitarian and Development Studies"
               style={{ width: '100%', height: '100%', objectFit: 'cover', opacity: 0.8 }}
-              onError={e => { e.target.src = 'http://cghds.run.edu.ng/assets/img/CGHDS_PHOTO_GALLERY/IMG_7105.JPG' }} />
+              onError={e => { e.target.src = 'public/images/cghdsnov2.jpg' }} />
           </div>
         </div>
 
@@ -232,10 +232,10 @@ export function ShortCoursesPage() {
             </p>
           </div>
           <div style={{ borderRadius: 20, overflow: 'hidden', height: 320 }}>
-            <img src="http://cghds.run.edu.ng/assets/img/CGHDS_PHOTO_GALLERY/student1.jpg"
+            <img src="public/images/student1.jpg"
               alt="RUN Sickle Cell+ Club"
               style={{ width: '100%', height: '100%', objectFit: 'cover', opacity: 0.8 }}
-              onError={e => { e.target.src = 'http://cghds.run.edu.ng/assets/img/CGHDS_PHOTO_GALLERY/IMG_7105.JPG' }} />
+              onError={e => { e.target.src = 'public/images/cghdsnov2.jpg' }} />
           </div>
         </div>
 

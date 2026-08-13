@@ -100,7 +100,7 @@ export default function Home() {
       <section style={{ position: 'relative', minHeight: '100vh', display: 'flex', flexDirection: 'column', justifyContent: 'center', overflow: 'hidden' }}>
         {/* BG */}
         <div style={{ position: 'absolute', inset: 0 }}>
-          <div style={{ position: 'absolute', inset: 0, backgroundImage: "url('http://cghds.run.edu.ng/assets/img/CGHDS_PHOTO_GALLERY/IMG_7105.JPG')", backgroundSize: 'cover', backgroundPosition: 'center', opacity: 'var(--img-opacity)' }} />
+          <div style={{ position: 'absolute', inset: 0, backgroundImage: "url('public/images/IMG_7105.JPG')", backgroundSize: 'cover', backgroundPosition: 'center', opacity: 'var(--img-opacity)' }} />
           <div style={{ position: 'absolute', inset: 0, background: 'var(--hero-overlay)' }} />
         </div>
 

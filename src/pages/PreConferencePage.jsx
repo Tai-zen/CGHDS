@@ -48,7 +48,7 @@ export function PreConferencePage() {
       {/* Hero */}
       <section style={{ position: "relative", paddingTop: 140, paddingBottom: 80, overflow: "hidden" }}>
         <div style={{ position: "absolute", inset: 0 }}>
-          <div style={{ position: "absolute", inset: 0, backgroundImage: "url('http://cghds.run.edu.ng/assets/img/cghdsnov2.jpg')", backgroundSize: "cover", backgroundPosition: "center", opacity: "var(--img-opacity)" }} />
+          <div style={{ position: "absolute", inset: 0, backgroundImage: "url('public/images/cghdsnov2.jpg')", backgroundSize: "cover", backgroundPosition: "center", opacity: "var(--img-opacity)" }} />
           <div style={{ position: "absolute", inset: 0, background: "var(--hero-overlay)" }} />
         </div>
         <C style={{ position: "relative" }}>
