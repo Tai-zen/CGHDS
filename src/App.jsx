@@ -15,6 +15,8 @@ import { CurrentStaffPage, CurrentExecutivesPage, PastStaffPage, PastExecutivesP
 import { GenderDevelopmentPage, HumanitarianDevelopmentPage, ShortCoursesPage } from './pages/ProgrammeDetailPages'
 import { OkaforIkwubizoLiteraturePage } from './pages/LiteraturePage'
 
+
+
 function ScrollToTop() {
   const { pathname } = useLocation()
   useEffect(() => { window.scrollTo({ top: 0, behavior: 'instant' }) }, [pathname])
