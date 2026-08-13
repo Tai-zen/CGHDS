@@ -44,7 +44,7 @@ const events = [
     description: 'Lecture series on innovative approaches to gender equality in peace-building efforts.',
     link: 'http://cghds.run.edu.ng',
     internal: false,
-    img: 'public/images/GENDER-CONFLICT-PEACE-BUILDING.png',
+    img: './images/GENDER-CONFLICT-PEACE-BUILDING.png',
   },
 ]
 

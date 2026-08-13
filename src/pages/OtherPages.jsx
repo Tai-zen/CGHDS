@@ -94,7 +94,7 @@ export function AboutPage() {
             <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
               <div style={{ borderRadius: 20, overflow: 'hidden', height: 360 }}>
                 <img src="http://cghds.run.edu.ng/assets/img/about/who-we-are-1.jpg"
-                  onError={e => { e.target.src = 'public/images/IMG_7105.JPG' }}
+                  onError={e => { e.target.src = './images/IMG_7105.JPG' }}
                   alt="CGHDS group photo" style={{ width: '100%', height: '100%', objectFit: 'cover', opacity: 0.85 }} />
               </div>
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
@@ -271,9 +271,9 @@ export function ProgrammesPage() {
         <C>
           <div style={{ display: 'grid', gap: 20 }} className="three-col">
             {[
-              { title: 'Gender & Development Studies', img: 'public/images/grad-course-two.jpg', description: 'Explore the multidimensional aspects of gender and its intersections with development, society, and policy.' },
-              { title: 'Humanitarian & Development Studies', img: 'public/images/grad-course-one.jpg', description: 'Gain expertise in humanitarian action, crisis response, and sustainable development frameworks.' },
-              { title: 'Short Courses & Programmes', img: 'public/images/student1.jpg', description: 'Flexible short courses for professionals seeking to enhance their skills in gender and development.' },
+              { title: 'Gender & Development Studies', img: './images/grad-course-two.jpg', description: 'Explore the multidimensional aspects of gender and its intersections with development, society, and policy.' },
+              { title: 'Humanitarian & Development Studies', img: './images/grad-course-one.jpg', description: 'Gain expertise in humanitarian action, crisis response, and sustainable development frameworks.' },
+              { title: 'Short Courses & Programmes', img: './images/student1.jpg', description: 'Flexible short courses for professionals seeking to enhance their skills in gender and development.' },
             ].map((prog, i) => (
               <Link key={i} to={PROG_ROUTES[i]} className="card-dark hover-lift" style={{ overflow: 'hidden', textDecoration: 'none', display: 'block' }}>
                 <div style={{ position: 'relative', height: 224, overflow: 'hidden' }}>
