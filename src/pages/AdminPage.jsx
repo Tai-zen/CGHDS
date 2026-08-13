@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { useAuth } from '../context/AuthContext'
 import { useTheme } from '../context/ThemeContext'
 import { supabase, uploadImage } from '../lib/supabase'
-import { LogOut, Plus, Trash2, Edit3, Save, X, BookOpen, Newspaper, BookMarked, GraduationCap, Feather, BarChart2, CheckCircle, AlertCircle, ArrowUpRight, Images, Users, Sun, Moon, Calendar, FileText } from 'lucide-react'
+import { LogOut, Plus, Trash2, Edit3, Save, X, BookOpen, Newspaper, BookMarked, GraduationCap, Feather, BarChart2, CheckCircle, AlertCircle, ArrowUpRight, Images, Users, Sun, Moon, Calendar, FileText, Menu } from 'lucide-react'
 
 const typeOptions = [
   { value: 'journal', label: 'Journal', icon: BookOpen },
@@ -463,6 +463,7 @@ export default function AdminPage() {
   const [editItem, setEditItem] = useState(null)
   const [activeTab, setActiveTab] = useState('publications')
   const [toast, setToast] = useState(null)
+  const [sidebarOpen, setSidebarOpen] = useState(false)
 
   const isLoggedIn = user || localAuth
 
@@ -609,11 +610,46 @@ export default function AdminPage() {
 
   return (
     <div style={{ minHeight: '100vh', background: 'var(--bg-base)', display: 'flex', transition: 'background 0.35s ease' }}>
+      <style>{`
+        @media (max-width: 768px) {
+          .admin-sidebar { transform: translateX(-100%); }
+          .admin-sidebar-close { display: block !important; }
+          .admin-backdrop { display: block !important; }
+          .admin-topbar { display: flex !important; }
+          .admin-main { margin-left: 0 !important; padding: 72px 16px 24px !important; }
+        }
+      `}</style>
+
       {toast && <Toast {...toast} onClose={() => setToast(null)} />}
 
+      {/* Mobile backdrop */}
+      {sidebarOpen && (
+        <div
+          onClick={() => setSidebarOpen(false)}
+          className="admin-backdrop"
+          style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.5)', zIndex: 40, display: 'none' }}
+        />
+      )}
+
+      {/* Mobile top bar */}
+      <div className="admin-topbar" style={{ display: 'none', position: 'fixed', top: 0, left: 0, right: 0, height: 56, background: 'var(--bg-surface)', borderBottom: '1px solid var(--border-subtle)', alignItems: 'center', padding: '0 16px', zIndex: 30, gap: 12 }}>
+        <button onClick={() => setSidebarOpen(true)} style={{ background: 'none', border: 'none', color: 'var(--text-primary)', cursor: 'pointer', padding: 4, display: 'flex' }}>
+          <Menu size={20} />
+        </button>
+        <img src="/CGHDS_LOGO.png" alt="CGHDS" style={{ width: 24, height: 24, objectFit: 'contain' }} />
+        <p style={{ color: 'var(--text-primary)', fontFamily: 'Syne, sans-serif', fontWeight: 700, fontSize: 14 }}>CGHDS Admin</p>
+      </div>
+
       {/* Sidebar */}
-      <aside style={{ width: 240, minHeight: '100vh', background: 'var(--bg-surface)', borderRight: '1px solid var(--border-subtle)', position: 'fixed', top: 0, left: 0, display: 'flex', flexDirection: 'column' }}>
-        <div style={{ padding: '24px 20px', borderBottom: '1px solid var(--border-subtle)' }}>
+      <aside
+        className="admin-sidebar"
+        style={{
+          width: 240, minHeight: '100vh', background: 'var(--bg-surface)', borderRight: '1px solid var(--border-subtle)',
+          position: 'fixed', top: 0, left: 0, display: 'flex', flexDirection: 'column', zIndex: 50,
+          transition: 'transform 0.3s ease', transform: sidebarOpen ? 'translateX(0)' : undefined
+        }}
+      >
+        <div style={{ padding: '24px 20px', borderBottom: '1px solid var(--border-subtle)', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
             <img src="/CGHDS_LOGO.png" alt="CGHDS" style={{ width: 36, height: 36, objectFit: 'contain' }} />
             <div>
@@ -621,13 +657,20 @@ export default function AdminPage() {
               <p style={{ color: 'var(--text-muted)', fontSize: 9, fontFamily: 'Syne, sans-serif', letterSpacing: '0.12em', textTransform: 'uppercase' }}>Admin Panel</p>
             </div>
           </div>
+          <button
+            onClick={() => setSidebarOpen(false)}
+            className="admin-sidebar-close"
+            style={{ display: 'none', background: 'none', border: 'none', color: 'var(--text-muted)', cursor: 'pointer', padding: 4 }}
+          >
+            <X size={18} />
+          </button>
         </div>
 
         <nav style={{ flex: 1, padding: 16, display: 'flex', flexDirection: 'column', gap: 4 }}>
           {sidebarItems.map(item => {
             const Icon = item.icon
             return (
-              <button key={item.id} onClick={() => { setActiveTab(item.id); setShowForm(false); setEditItem(null) }}
+              <button key={item.id} onClick={() => { setActiveTab(item.id); setShowForm(false); setEditItem(null); setSidebarOpen(false) }}
                 style={{ width: '100%', display: 'flex', alignItems: 'center', gap: 12, padding: '10px 14px', borderRadius: 12, fontSize: 13, fontFamily: 'Syne, sans-serif', fontWeight: 600, border: 'none', cursor: 'pointer', textAlign: 'left', transition: 'all 0.2s', background: activeTab === item.id ? 'var(--gold-bg)' : 'transparent', color: activeTab === item.id ? 'var(--gold)' : 'var(--text-muted)' }}>
                 <Icon size={14} />{item.label}
               </button>
@@ -658,7 +701,7 @@ export default function AdminPage() {
       </aside>
 
       {/* Main content */}
-      <main style={{ marginLeft: 240, flex: 1, padding: 40 }}>
+      <main className="admin-main" style={{ marginLeft: 240, flex: 1, padding: 40 }}>
 
         {/* ─── Upcoming Events Tab ─── */}
         {activeTab === 'upcoming' && (
