@@ -323,7 +323,7 @@ export function EventsPage() {
       tag: 'WORKSHOP',
       date: '21 October 2025',
       title: 'Pre-conference Workshop Presentation by Prof. Albert Olawale Isaac',
-      img: './images/cghdsnov.jpg',
+      img: './images/novcghds.jpg',
       description: 'Pre-conference workshop presentation delivered by Professor Albert Olawale Isaac on 21 October 2025. Topic: Social Construction of Gender, Humanitarianism and Development. Department of Peace, Security and Humanitarian Studies, Faculty of Multidisciplinary Studies, University of Ibadan.',
       link: '/events/pre-conference-workshop',
       internal: true,

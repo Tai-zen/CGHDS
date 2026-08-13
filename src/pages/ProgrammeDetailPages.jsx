@@ -109,7 +109,7 @@ export function GenderDevelopmentPage() {
             </p>
           </div>
           <div style={{ borderRadius: 20, overflow: 'hidden', height: 320 }}>
-            <img src="public/images/grad-course-two.jpg"
+            <img src="./images/grad-course-two.jpg"
               alt="Gender and Development Studies"
               style={{ width: '100%', height: '100%', objectFit: 'cover', opacity: 0.8 }}
               onError={e => { e.target.src = './images/cghdsnov2.jpg' }} />
@@ -185,7 +185,7 @@ export function HumanitarianDevelopmentPage() {
             </p>
           </div>
           <div style={{ borderRadius: 20, overflow: 'hidden', height: 320 }}>
-            <img src="public/images/grad-course-one.jpg"
+            <img src="/images/grad-course-one.jpg"
               alt="Humanitarian and Development Studies"
               style={{ width: '100%', height: '100%', objectFit: 'cover', opacity: 0.8 }}
               onError={e => { e.target.src = './images/cghdsnov2.jpg' }} />
@@ -232,7 +232,7 @@ export function ShortCoursesPage() {
             </p>
           </div>
           <div style={{ borderRadius: 20, overflow: 'hidden', height: 320 }}>
-            <img src="public/images/student1.jpg"
+            <img src="./images/student1.jpg"
               alt="RUN Sickle Cell+ Club"
               style={{ width: '100%', height: '100%', objectFit: 'cover', opacity: 0.8 }}
               onError={e => { e.target.src = './images/cghdsnov2.jpg' }} />
