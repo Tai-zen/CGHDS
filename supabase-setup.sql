@@ -56,14 +56,12 @@ create table if not exists public.upcoming_events (
 );
 
 -- Events table (appears as cards on the public /events page)
--- Note: "desc" is a reserved SQL keyword, so it must be double-quoted
--- everywhere it's used as a column name (Supabase JS client calls need no quoting).
 create table if not exists public.events (
   id uuid default gen_random_uuid() primary key,
   tag text not null default 'CONFERENCE',
   date text,
   title text not null,
-  "desc" text,
+  description text,
   img text,
   link text,
   internal boolean default false,
