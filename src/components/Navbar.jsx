@@ -192,12 +192,12 @@ export default function Navbar() {
         <div className="animate-fade-in mobile-nav-toggle" style={{ margin: '8px 16px 0', borderRadius: 16, overflow: 'hidden', background: 'var(--dropdown-bg)', border: '1px solid var(--border-nav)' }}>
           <div style={{ padding: 16, display: 'flex', flexDirection: 'column', gap: 4 }}>
             {[{ label: 'Home', path: '/' }, ...links].map(l => (
-              <Link key={l.path} to={l.path} style={{ display: 'block', padding: '12px 16px', borderRadius: 12, fontSize: 14, fontFamily: 'Syne, sans-serif', fontWeight: 500, textDecoration: 'none', color: isActive(l.path) ? '#fff' : 'rgba(255,255,255,0.6)', background: isActive(l.path) ? 'rgba(255,255,255,0.1)' : 'transparent' }}>
+              <Link key={l.path} to={l.path} style={{ display: 'block', padding: '12px 16px', borderRadius: 12, fontSize: 14, fontFamily: 'Syne, sans-serif', fontWeight: 500, textDecoration: 'none', color: isActive(l.path) ? '#fff' : 'rgba(26,61,40,0.5)', background: isActive(l.path) ? 'rgba(255,255,255,0.1)' : 'transparent' }}>
                 {l.label}
               </Link>
             ))}
 
-            <Link to="/gallery" style={{ display: 'block', padding: '12px 16px', borderRadius: 12, fontSize: 14, fontFamily: 'Syne, sans-serif', fontWeight: 500, textDecoration: 'none', color: galleryActive ? '#fff' : 'rgba(255,255,255,0.6)', background: galleryActive ? 'rgba(255,255,255,0.1)' : 'transparent' }}>
+            <Link to="/gallery" style={{ display: 'block', padding: '12px 16px', borderRadius: 12, fontSize: 14, fontFamily: 'Syne, sans-serif', fontWeight: 500, textDecoration: 'none', color: galleryActive ? '#fff' : 'rgba(26,61,40,0.5)', background: galleryActive ? 'rgba(255,255,255,0.1)' : 'transparent' }}>
               Gallery
             </Link>
 
@@ -208,7 +208,7 @@ export default function Navbar() {
                 <ChevronDown size={13} style={{ color: 'rgba(255,255,255,0.3)', transform: mobileStaff ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s' }} />
               </button>
               {mobileStaff && staffLinks.map(item => (
-                <Link key={item.path} to={item.path} style={{ display: 'block', padding: '10px 16px', borderRadius: 12, fontSize: 14, fontFamily: 'Syne, sans-serif', color: 'rgba(255,255,255,0.6)', textDecoration: 'none' }}>
+                <Link key={item.path} to={item.path} style={{ display: 'block', padding: '10px 16px', borderRadius: 12, fontSize: 14, fontFamily: 'Syne, sans-serif', color: 'rgba(26,61,40,0.5)', textDecoration: 'none' }}>
                   {item.label}
                 </Link>
               ))}
@@ -221,7 +221,7 @@ export default function Navbar() {
                 <ChevronDown size={13} style={{ color: 'rgba(255,255,255,0.3)', transform: mobileResearch ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s' }} />
               </button>
               {mobileResearch && researchLinks.map(item => (
-                <Link key={item.path} to={item.path} style={{ display: 'block', padding: '10px 16px', borderRadius: 12, fontSize: 14, fontFamily: 'Syne, sans-serif', color: 'rgba(255,255,255,0.6)', textDecoration: 'none' }}>
+                <Link key={item.path} to={item.path} style={{ display: 'block', padding: '10px 16px', borderRadius: 12, fontSize: 14, fontFamily: 'Syne, sans-serif', color: 'rgba(26,61,40,0.5)', textDecoration: 'none' }}>
                   {item.label}
                 </Link>
               ))}

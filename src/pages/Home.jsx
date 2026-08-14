@@ -124,10 +124,10 @@ export default function Home() {
             </div>
           )}
 
-          <h1 className="font-display animate-fade-up delay-1" style={{ fontWeight: 800, lineHeight: 0.95, marginBottom: 32, fontSize: 'clamp(48px, 8vw, 110px)', overflowWrap: 'break-word', wordBreak: 'break-word', hyphens: 'auto' }}>
+          <h1 className="font-display animate-fade-up delay-1" style={{ fontWeight: 800, lineHeight: 0.95, marginBottom: 32, fontSize: 'clamp(32px, 11vw, 110px)', overflowWrap: 'break-word' }}>
             <span style={{ color: 'var(--text-primary)' }}>Centre for Gender,</span>
             <br />
-            <span className="font-serif text-gold" style={{ fontSize: 'clamp(44px, 7.5vw, 104px)', fontStyle: 'italic' }}>Humanitarian</span>
+            <span className="font-serif text-gold" style={{ fontSize: 'clamp(28px, 10vw, 104px)', fontStyle: 'italic' }}>Humanitarian</span>
             <br />
             <span style={{ color: 'var(--text-primary)' }}>&amp; Development</span>
             <br />
@@ -183,7 +183,7 @@ export default function Home() {
             {/* Left */}
             <div style={{ top: 128 }}>
               <p className="section-label" style={{ marginBottom: 24 }}>What We Do</p>
-              <h2 className="font-display" style={{ fontWeight: 800, color: 'var(--text-primary)', lineHeight: 0.95, marginBottom: 24, fontSize: 'clamp(36px, 5vw, 64px)' }}>
+              <h2 className="font-display" style={{ fontWeight: 800, color: 'var(--text-primary)', lineHeight: 0.95, marginBottom: 24, fontSize: 'clamp(28px, 7vw, 64px)', overflowWrap: 'break-word' }}>
                 Shaping the future of <span className="font-serif text-gold" style={{ fontStyle: 'italic' }}>gender</span> &amp; development.
               </h2>
               <p style={{ color: 'var(--text-secondary)', lineHeight: 1.7, marginBottom: 32, fontSize: 14, maxWidth: 380 }}>
@@ -221,7 +221,7 @@ export default function Home() {
           <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', marginBottom: 48 }}>
             <div>
               <p className="section-label" style={{ marginBottom: 16 }}>Past Events</p>
-              <h2 className="font-display" style={{ fontWeight: 800, color: 'var(--text-primary)', fontSize: 'clamp(32px, 4vw, 56px)' }}>Campus Calendar</h2>
+              <h2 className="font-display" style={{ fontWeight: 800, color: 'var(--text-primary)', fontSize: 'clamp(26px, 6vw, 56px)', overflowWrap: 'break-word' }}>Campus Calendar</h2>
             </div>
             <Link to="/events" style={{ display: 'flex', alignItems: 'center', gap: 8, color: 'var(--text-muted)', fontSize: 14, fontFamily: 'Syne, sans-serif', textDecoration: 'none' }}>
               View all events <ArrowRight size={14} />
@@ -269,7 +269,7 @@ export default function Home() {
           <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', marginBottom: 48 }}>
             <div>
               <p className="section-label" style={{ marginBottom: 16 }}>Leadership</p>
-              <h2 className="font-display" style={{ fontWeight: 800, color: 'var(--text-primary)', fontSize: 'clamp(32px, 4vw, 56px)' }}>Meet the Executives</h2>
+              <h2 className="font-display" style={{ fontWeight: 800, color: 'var(--text-primary)', fontSize: 'clamp(26px, 6vw, 56px)', overflowWrap: 'break-word' }}>Meet the Executives</h2>
             </div>
             <Link to="/about" style={{ display: 'flex', alignItems: 'center', gap: 8, color: 'var(--text-muted)', fontSize: 14, fontFamily: 'Syne, sans-serif', textDecoration: 'none' }}>
               Meet the team <ArrowRight size={14} />
@@ -349,7 +349,7 @@ export default function Home() {
               <span className="font-display" style={{ display: 'inline-block', background: 'var(--gold-bg-strong)', border: '1px solid var(--border-gold)', color: 'var(--gold)', fontSize: 11, fontWeight: 700, letterSpacing: '0.15em', textTransform: 'uppercase', padding: '8px 16px', borderRadius: 999, marginBottom: 24 }}>
                 Upcoming Event
               </span>
-              <h2 className="font-display" style={{ fontWeight: 800, color: '#fff', marginBottom: 12, fontSize: 'clamp(24px, 4vw, 52px)' }}>
+              <h2 className="font-display" style={{ fontWeight: 800, color: '#fff', marginBottom: 12, fontSize: 'clamp(22px, 6vw, 52px)', overflowWrap: 'break-word' }}>
                 {ev.title}
               </h2>
               {ev.subtitle && <p style={{ color: 'rgba(255,255,255,0.5)', fontSize: 17, marginBottom: 8 }}>{ev.subtitle}</p>}
